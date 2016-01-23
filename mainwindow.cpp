@@ -191,6 +191,13 @@ void MainWindow::on_sourisCliquee(int touche)
                     if(verifSelection){
                         curseurJeu->setBrush(selection[currentSelection]->brush());
                     }
+                    if(listeItem.last() == btnSave){
+                        //IHM pour demander le nom
+                        dialNomNiv = new DialogNomNiveau();
+                        if(!connect(dialNomNiv, SIGNAL(accepted(QString)), this, SLOT(on_DialogAccepted(QString))))
+                            qDebug() << "Erreur connexion signal accepted au slot on_DialogAccepted";
+                        dialNomNiv->exec();
+                    }
                 }
             }
         }
@@ -296,25 +303,22 @@ void MainWindow::on_sourisRelachee()
                     indicDepart[cx]->setBrush(QBrush(QPixmap(":/Images/fighter.png").scaledToHeight(indicDepart[cx]->rect().height())));
                     depart=cx;
                 }else{
-                    if(listeItem.last() == btnSave){
-                        //IHM pour demander le nom
-
-                        /*
-                        //Requete pour insérer le niveau
-                        QSqlQuery query;
-                        query.prepare("insert into Niveaux (nom, grille0, grille1, grille2, grille3, grille4, grille5, grille6, grille7, off, depart) values (:nom, :grille0, :grille1, :grille2, :grille3, :grille4, :grille5, :grille6, :grille7, :off, :depart);");
-                        /**Faut insérer les valeurs du Dialog**/
-                        //query.bindValue(":nom, :grille0, :grille1, :grille2, :grille3, :grille4, :grille5, :grille6, :grille7, :off, :depart", );
-                        /*if(query.exec()){
-                            qDebug() << "Requete réussie";
-                        } else qDebug() << "Echec de la requete";
-                        */
-                    }else{
-                        currentSelection=-1;
-                        curseurJeu->setBrush(QBrush(QPixmap(":/Images/curseurVert.png").scaledToHeight(curseurJeu->rect().height())));
-                    }
+                    currentSelection=-1;
+                    curseurJeu->setBrush(QBrush(QPixmap(":/Images/curseurVert.png").scaledToHeight(curseurJeu->rect().height())));
                 }
             }
         }
     }
+}
+
+void MainWindow::on_DialogAccepted(QString nom)
+{
+    qDebug() << nom << endl;
+    //Requete pour insérer le niveau
+    /*QSqlQuery query;
+    query.prepare("insert into Niveaux (nom, grille0, grille1, grille2, grille3, grille4, grille5, grille6, grille7, off, depart) values (:nom, :grille0, :grille1, :grille2, :grille3, :grille4, :grille5, :grille6, :grille7, :off, :depart);");
+    query.bindValue(":nom, :grille0, :grille1, :grille2, :grille3, :grille4, :grille5, :grille6, :grille7, :off, :depart", nom);
+    if(query.exec()){
+        qDebug() << "Requete réussie";
+    } else qDebug() << "Echec de la requete";*/
 }

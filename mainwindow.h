@@ -13,6 +13,7 @@
 #include <QSqlDatabase>
 #include <QSqlQuery>
 #include "vue.h"
+#include "dialognomniveau.h"
 
 #define TAILLE 8
 
@@ -32,6 +33,7 @@ private slots:
     void on_sourisBougee(QPoint position);
     void on_sourisCliquee(int touche);
     void on_sourisRelachee();
+    void on_DialogAccepted(QString);
 
 private:
     Ui::MainWindow *ui;
@@ -48,6 +50,7 @@ private:
     QString base[TAILLE][TAILLE];
     short currentSelection,depart;
     QPen *pen;
+    DialogNomNiveau *dialNomNiv;
 };
 
 #endif // MAINWINDOW_H
