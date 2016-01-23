@@ -12,5 +12,6 @@
         <file>Laser/Laser GH.png</file>
         <file>Images/boutonEditeurON.png</file>
         <file>Images/boutonJouerON.png</file>
+        <file>Images/chasseur.png</file>
     </qresource>
 </RCC>
