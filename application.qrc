@@ -23,5 +23,7 @@
         <file>Laser/Mur.png</file>
         <file>Images/Enregistrer.png</file>
         <file>Images/iconeJeu.png</file>
+        <file>Images/boutonMP.png</file>
+        <file>Images/boutonMP_ON.png</file>
     </qresource>
 </RCC>

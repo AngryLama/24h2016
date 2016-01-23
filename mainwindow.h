@@ -46,7 +46,7 @@ private:
     QGraphicsRectItem *cadreJeu, *cases[TAILLE][TAILLE];
 
     //Editeur
-    QGraphicsRectItem *tableau[TAILLE][TAILLE], *indicDepart[TAILLE], *selection[6], *btnSave;
+    QGraphicsRectItem *tableau[TAILLE][TAILLE], *indicDepart[TAILLE], *selection[6], *btnSave, *btnMP;
     QString base[TAILLE][TAILLE];
     short currentSelection,depart;
     QPen *pen;

@@ -100,6 +100,12 @@ MainWindow::MainWindow(QWidget *parent) :
     btnSave->setBrush(QBrush(QPixmap(":/Images/Enregistrer.png").scaledToHeight(80)));
     sceneEditeur->addItem(btnSave);
 
+    //Création du bouton menu principal
+    btnMP = new QGraphicsRectItem(0,0,80,80);
+    btnMP->setPos(40,120);
+    btnMP->setBrush(QBrush(QPixmap(":/Images/boutonMP.png").scaledToHeight(80)));
+    sceneEditeur->addItem(btnMP);
+
     //Connexion à la base de données
     db = QSqlDatabase::addDatabase("QSQLITE");
     db.setDatabaseName("niveaux.sqlite");
@@ -143,6 +149,12 @@ void MainWindow::on_sourisBougee(QPoint position)
     if(jeu->scene()==sceneEditeur || jeu->scene()==sceneJeu)
     {
         curseurJeu->setPos(position);
+        QList<QGraphicsItem*> listeItem = curseurJeu->collidingItems();
+        if (listeItem.length()>0){
+            if (listeItem.last() == btnMP)
+                btnMP->setBrush(QBrush(QPixmap(":/Images/boutonMP_ON.png").scaledToHeight(80)));
+            else btnMP->setBrush(QBrush(QPixmap(":/Images/boutonMP.png").scaledToHeight(80)));
+        }
     }
 }
 
@@ -197,6 +209,11 @@ void MainWindow::on_sourisCliquee(int touche)
                         if(!connect(dialNomNiv, SIGNAL(accepted(QString)), this, SLOT(on_DialogAccepted(QString))))
                             qDebug() << "Erreur connexion signal accepted au slot on_DialogAccepted";
                         dialNomNiv->exec();
+                    }
+                    if(listeItem.last() == btnMP){
+                        //Retour au menu principal
+                        sceneEditeur->clear();
+                        jeu->setScene(sceneMenu);
                     }
                 }
             }
