@@ -15,7 +15,7 @@ enum{
 class Jeu : public QGraphicsScene
 {
 public:
-    Jeu(QString levelPath);
+    Jeu(QString levelPath=0);
     void creerMiroir(short sens, QGraphicsPolygonItem *poly);
 
 private:

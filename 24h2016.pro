@@ -16,12 +16,14 @@ SOURCES += main.cpp\
         mainwindow.cpp \
     laser.cpp \
     vue.cpp \
-    jeu.cpp
+    jeu.cpp \
+    editeur.cpp
 
 HEADERS  += mainwindow.h \
     laser.h \
     vue.h \
-    jeu.h
+    jeu.h \
+    editeur.h
 
 FORMS    += mainwindow.ui
 

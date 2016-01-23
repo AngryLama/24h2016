@@ -11,6 +11,7 @@
 #include <QLabel>
 #include <QDebug>
 #include "vue.h"
+#include "editeur.h"
 #include "laser.h"
 
 namespace Ui {
