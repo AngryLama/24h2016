@@ -352,7 +352,27 @@ void MainWindow::on_sourisCliquee(int touche)
                                     for(int x=0;x<TAILLE;x++)
                                     {
                                         QStringList temp=query.value(x).toString().split(";");
-
+                                        for(int y=0; y<TAILLE; y++){
+                                            apercu[x][y]->setBrush(QBrush());
+                                            if(temp[y] == "GH") {
+                                                apercu[x][y]->setBrush(QBrush(QPixmap(":/Laser/Miroir GH.png").scaledToHeight(apercu[x][y]->rect().height())));
+                                            }
+                                            if(temp[y] == "DH") {
+                                                apercu[x][y]->setBrush(QBrush(QPixmap(":/Laser/Miroir DH.png").scaledToHeight(apercu[x][y]->rect().height())));
+                                            }
+                                            if(temp[y] == "GB") {
+                                                apercu[x][y]->setBrush(QBrush(QPixmap(":/Laser/Miroir GB.png").scaledToHeight(apercu[x][y]->rect().height())));
+                                            }
+                                            if(temp[y] =="DB") {
+                                                apercu[x][y]->setBrush(QBrush(QPixmap(":/Laser/Miroir DB.png").scaledToHeight(apercu[x][y]->rect().height())));
+                                            }
+                                            if(temp[y] =="M") {
+                                                apercu[x][y]->setBrush(QBrush(QPixmap(":/Laser/Mur.png").scaledToHeight(apercu[x][y]->rect().height())));
+                                            }
+                                            if(temp[y] == "TIE") {
+                                                apercu[x][y]->setBrush(QBrush(QPixmap(":/Laser/chasseur.png").scaledToHeight(apercu[x][y]->rect().height())));
+                                            }
+                                        }
                                     }
                                 }
                             }
