@@ -4,12 +4,7 @@
 #include <QObject>
 #include <QGraphicsPolygonItem>
 
-enum{
-    GH,
-    DH,
-    GB,
-    DB
-};
+
 
 class Miroir : public QObject, public QGraphicsPolygonItem
 {

@@ -15,7 +15,6 @@ TEMPLATE = app
 SOURCES += main.cpp\
         mainwindow.cpp \
     laser.cpp \
-    miroir.cpp \
     vue.cpp
 
 HEADERS  += mainwindow.h \
