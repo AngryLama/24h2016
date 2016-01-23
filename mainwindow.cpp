@@ -309,7 +309,9 @@ void MainWindow::on_sourisCliquee(int touche)
                     {
                         //Retour au menu
                         if(listeItem.last()==boutonNiveaux[3]){
+                            qDeleteAll(offi);
                             offi.clear();
+                            qDeleteAll(custom);
                             custom.clear();
                             for(int x=0;x<TAILLE;x++)
                             {
@@ -322,6 +324,15 @@ void MainWindow::on_sourisCliquee(int touche)
                             jeu->setScene(sceneMenu);
                         }
 
+                        if(listeItem.last()!=boutonNiveaux[0] && listeItem.last()!=boutonNiveaux[1] && listeItem.last()!=boutonNiveaux[2] && listeItem.last()!=ligne[0] && listeItem.last()!=ligne[1] && listeItem.last()!=titre[0] && listeItem.last()!=titre[1]){
+                            for(int x=0;x<TAILLE;x++)
+                            {
+                                for(int y=0;y<TAILLE;y++)
+                                {
+                                    apercu[x][y]->setBrush(QBrush());
+                                }
+                            }
+                        }
                         //Apercu des niveaux
                         int memX;
                         bool verifOffi=false;
@@ -363,7 +374,6 @@ void MainWindow::on_sourisCliquee(int touche)
                                     {
                                         QStringList temp=query.value(x).toString().split(";");
                                         for(int y=0; y<TAILLE; y++){
-                                            apercu[x][y]->setBrush(QBrush());
                                             if(temp[y] == "GH") {
                                                 apercu[x][y]->setBrush(QBrush(QPixmap(":/Laser/Miroir GH.png").scaledToHeight(apercu[x][y]->rect().height())));
                                             }
