@@ -41,12 +41,12 @@ MainWindow::MainWindow(QWidget *parent) :
 
     //Création du curseur du menu
     curseurMenu=new QGraphicsRectItem(0,0,80,80);
-    curseurMenu->setBrush(QBrush(QPixmap(":/Images/curseurMenu.png").scaledToHeight(curseurMenu->rect().height())));
+    curseurMenu->setBrush(QBrush(QPixmap(":/Images/fighter.png").scaledToHeight(curseurMenu->rect().height())));
     sceneMenu->addItem(curseurMenu);
 
     //Création du curseur en jeu
     curseurJeu=new QGraphicsRectItem(0,0,80,80);
-    curseurJeu->setBrush(QBrush(QPixmap(":/Images/curseurMenu.png").scaledToHeight(curseurJeu->rect().height())));
+    curseurJeu->setBrush(QBrush(QPixmap(":/Images/fighter.png").scaledToHeight(curseurJeu->rect().height())));
 
     //Création du sélecteur de niveau
     sceneNiveaux=new QGraphicsScene(0,0,geometry().width()-10,geometry().height()-10);
@@ -250,7 +250,7 @@ void MainWindow::on_sourisRelachee()
             if(verifTableau && currentSelection!=-1)
             {
                 tableau[cx][cy]->setBrush(curseurJeu->brush());
-                curseurJeu->setBrush(QBrush(QPixmap(":/Images/curseurMenu.png").scaledToHeight(curseurJeu->rect().height())));
+                curseurJeu->setBrush(QBrush(QPixmap(":/Images/fighter.png").scaledToHeight(curseurJeu->rect().height())));
                 switch (currentSelection) {
                 case 0:
                     base[cx][cy]="GH";
@@ -274,8 +274,27 @@ void MainWindow::on_sourisRelachee()
                     break;
                 }
             }else{
-                currentSelection=-1;
-                curseurJeu->setBrush(QBrush(QPixmap(":/Images/curseurMenu.png").scaledToHeight(curseurJeu->rect().height())));
+                bool verifDepart=false;
+                int cx;
+                for(int x=0;x<TAILLE;x++)
+                {
+                    for(int y=0;y<TAILLE;y++)
+                    {
+                        if(listeItem.last()==tableau[x][y])
+                        {
+                            verifTableau=true;
+                            cx=x;
+                            cy=y;
+                        }
+                    }
+                }
+                if(verifDepart)
+                {
+
+                }else{
+                    currentSelection=-1;
+                    curseurJeu->setBrush(QBrush(QPixmap(":/Images/fighter.png").scaledToHeight(curseurJeu->rect().height())));
+                }
             }
         }
     }
