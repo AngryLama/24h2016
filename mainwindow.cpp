@@ -177,6 +177,7 @@ void MainWindow::on_sourisCliquee(int touche)
             }
         }else{
             if(jeu->scene()==sceneEditeur){
+                currentSelection=-1;
                 listeItem = curseurJeu->collidingItems();
                 if (listeItem.length()>0)
                 {
