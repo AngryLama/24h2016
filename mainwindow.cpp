@@ -80,8 +80,8 @@ MainWindow::MainWindow(QWidget *parent) :
     //Création des indicateurs de départ
     for(int x=0;x<TAILLE;x++)
     {
-        indicDepart[x]=new QGraphicsEllipseItem(0,0,40,40);
-        indicDepart[x]->setPos(250,60+(80*x));
+        indicDepart[x]=new QGraphicsRectItem(0,0,80,80);
+        indicDepart[x]->setPos(200,cadreEditeur.y()+80*x);
         indicDepart[x]->setBrush(QBrush(Qt::white));
         sceneEditeur->addItem(indicDepart[x]);
     }
@@ -234,63 +234,59 @@ void MainWindow::on_sourisRelachee()
         if (listeItem.length()>0)
         {
             bool verifTableau=false;
-            int cx,cy;
-            for(int x=0;x<TAILLE;x++)
+            int x,y;
+            for(x=0;x<TAILLE;x++)
             {
-                for(int y=0;y<TAILLE;y++)
+                for(y=0;y<TAILLE;y++)
                 {
                     if(listeItem.last()==tableau[x][y])
                     {
                         verifTableau=true;
-                        cx=x;
-                        cy=y;
                     }
                 }
             }
             if(verifTableau && currentSelection!=-1)
             {
-                tableau[cx][cy]->setBrush(curseurJeu->brush());
+                tableau[x][y]->setBrush(curseurJeu->brush());
                 curseurJeu->setBrush(QBrush(QPixmap(":/Images/fighter.png").scaledToHeight(curseurJeu->rect().height())));
                 switch (currentSelection) {
                 case 0:
-                    base[cx][cy]="GH";
+                    base[x][y]="GH";
                     break;
                 case 1:
-                    base[cx][cy]="DH";
+                    base[x][y]="DH";
                     break;
                 case 2:
-                    base[cx][cy]="GB";
+                    base[x][y]="GB";
                     break;
                 case 3:
-                    base[cx][cy]="DB";
+                    base[x][y]="DB";
                     break;
                 case 4:
-                    base[cx][cy]="MH";
+                    base[x][y]="MH";
                     break;
                 case 5:
-                    base[cx][cy]="MV";
+                    base[x][y]="MV";
                     break;
                 default:
                     break;
                 }
             }else{
                 bool verifDepart=false;
-                int cx;
-                for(int x=0;x<TAILLE;x++)
+                int x;
+                for(x=0;x<TAILLE;x++)
                 {
-                    for(int y=0;y<TAILLE;y++)
+                    if(listeItem.last()==indicDepart[x])
                     {
-                        if(listeItem.last()==tableau[x][y])
-                        {
-                            verifTableau=true;
-                            cx=x;
-                            cy=y;
-                        }
+                        verifDepart=true;
                     }
                 }
                 if(verifDepart)
                 {
-
+                    for(int y=0;y<TAILLE;y++)
+                        indicDepart[y]->setBrush(QBrush(Qt::white));
+                    indicDepart[x]->setBrush(QBrush(QPixmap(":/Images/fighter.png").scaledToHeight(indicDepart[x]->rect().height())));
+                    depart=x;
                 }else{
                     currentSelection=-1;
                     curseurJeu->setBrush(QBrush(QPixmap(":/Images/fighter.png").scaledToHeight(curseurJeu->rect().height())));
