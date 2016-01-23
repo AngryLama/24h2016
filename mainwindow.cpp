@@ -130,6 +130,16 @@ MainWindow::MainWindow(QWidget *parent) :
     cadreApercu->setPos((width()/4)-(cadreApercu->rect().width()/2)+50,(height()/3)*2+10);
     sceneNiveaux->addItem(cadreApercu);
 
+    for(int x=0;x<TAILLE;x++)
+    {
+        for(int y=0;y<TAILLE;y++)
+        {
+            apercu[x][y]=new QGraphicsRectItem(0,0,cadreApercu->rect().height()/8,cadreApercu->rect().height()/8);
+            apercu[x][y]->setPos(cadreApercu->x()+(cadreApercu->rect().height()/8)*x,cadreApercu->y()+(cadreApercu->rect().height()/8)*y);
+            sceneNiveaux->addItem(apercu[x][y]);
+        }
+    }
+
     boutonNiveaux[0]=new QGraphicsRectItem(0,0,cadreApercu->pos().x()-50,(height()/3)-20);
     boutonNiveaux[0]->setBrush(QPixmap(":/Images/Play.png").scaledToHeight(boutonNiveaux[0]->rect().height()));
     boutonNiveaux[0]->setPos(10,(height()/3)*2+10);
@@ -210,12 +220,40 @@ void MainWindow::on_sourisCliquee(int touche)
                 if(listeItem.last()==boutonMenu[0])
                 {
                     //Choix du niveau
-                    QSqlQuery query("select * from Niveaux;");
+                    QSqlQuery query("select nom,off from Niveaux;");
                     if(query.exec()){
                         while(query.next()){
-
+                            QGraphicsTextItem *temp=new QGraphicsTextItem(query.value(0).toString());
+                            temp->setDefaultTextColor(QColor(Qt::white));
+                            temp->setFont(QFont("Spylord Laser",15));
+                            if(query.value(1).toInt())
+                            {
+                                offi<<temp;
+                            }else{
+                                custom<<temp;
+                            }
                         }
                     } else qDebug() << "Echec de la requete";
+
+                    //Affichage des niveaux
+                    for(int x=0;x<offi.length();x++)
+                    {
+                        if(x<6)
+                        {
+                            offi[x]->setPos(40,120+55*x);
+                            sceneNiveaux->addItem(offi[x]);
+                        }
+                    }
+
+                    for(int x=0;x<custom.length();x++)
+                    {
+                        if(x<6)
+                        {
+                            custom[x]->setPos((width()/2)+40,120+55*x);
+                            sceneNiveaux->addItem(custom[x]);
+                        }
+                    }
+
                     sceneNiveaux->addItem(curseur);
                     jeu->setScene(sceneNiveaux);
                 }
@@ -267,11 +305,58 @@ void MainWindow::on_sourisCliquee(int touche)
                 }
             }else{
                 if(jeu->scene()==sceneNiveaux){
-                    if(listeItem.last()==boutonNiveaux[3]){
-                        offi.clear();
-                        user.clear();
-                        sceneMenu->addItem(curseur);
-                        jeu->setScene(sceneMenu);
+                    if (listeItem.length()>0)
+                    {
+                        if(listeItem.last()==boutonNiveaux[3]){
+                            offi.clear();
+                            custom.clear();
+                            sceneMenu->addItem(curseur);
+                            jeu->setScene(sceneMenu);
+                        }
+                        int memX;
+                        bool verifOffi=false;
+                        for(int x=0;x<offi.length();x++)
+                        {
+                            if(listeItem.last()==offi[x])
+                            {
+                                verifOffi=true;
+                                memX=x;
+                            }
+                        }
+
+                        bool verifCustom=false;
+                        for(int x=0;x<custom.length();x++)
+                        {
+                            if(listeItem.last()==custom[x])
+                            {
+                                verifCustom=true;
+                                memX=x;
+                            }
+                        }
+
+                        if(verifOffi || verifCustom)
+                        {
+                            QSqlQuery query;
+                            query.prepare("select grille0,grille1,grille2,grille3,grille4,grille5,grille6,grille7 from Niveaux where nom=:nom and off=:off;");
+                            if(verifOffi){
+                                query.bindValue(":nom",offi[memX]->toPlainText());
+                                query.bindValue(":off",true);
+                            }else{
+                                query.bindValue(":nom",custom[memX]->toPlainText());
+                                query.bindValue(":off",false);
+                            }
+                            if(query.exec())
+                            {
+                                while(query.next())
+                                {
+                                    for(int x=0;x<TAILLE;x++)
+                                    {
+                                        QStringList temp=query.value(x).toString().split(";");
+
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             }

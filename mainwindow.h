@@ -55,9 +55,8 @@ private:
     //Selecteur de niveaux
     QGraphicsTextItem *titre[2];
     QGraphicsRectItem *zone[2],*boutonNiveaux[4],*apercu[TAILLE][TAILLE],*cadreApercu;
-    QList<QGraphicsRectItem*> offi,user;
+    QList<QGraphicsTextItem*> offi,custom;
     QGraphicsLineItem *ligne[2];
-
 };
 
 #endif // MAINWINDOW_H
