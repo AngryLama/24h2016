@@ -12,8 +12,6 @@
         <file>Laser/Miroir DH laser.png</file>
         <file>Laser/Miroir GB laser.png</file>
         <file>Laser/Miroir GH laser.png</file>
-        <file>Laser/Mur H.png</file>
-        <file>Laser/Mur V.png</file>
         <file>Laser/Miroir DB.png</file>
         <file>Laser/Miroir DH.png</file>
         <file>Laser/Miroir GB.png</file>
@@ -23,5 +21,6 @@
         <file>Images/curseurRouge.png</file>
         <file>Images/curseurVert.png</file>
         <file>Images/Enregistrer.png</file>
+        <file>Laser/Mur.png</file>
     </qresource>
 </RCC>

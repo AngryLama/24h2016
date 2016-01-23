@@ -7,9 +7,6 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    ui->grpLvlBase->hide();
-    ui->grpLvlEdit->hide();
-
     //Importation de la police d'ecriture
     QFontDatabase::addApplicationFont(":/Spyv3l.ttf"); //Spylord Laser
 
