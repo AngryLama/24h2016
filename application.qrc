@@ -4,14 +4,18 @@
         <file>Images/boutonEditeur.png</file>
         <file>Images/boutonJouer.png</file>
         <file>Images/curseurMenu.png</file>
-        <file>Laser/Laser DB.png</file>
-        <file>Laser/Laser DH.png</file>
         <file>Laser/Laser droit H.png</file>
         <file>Laser/Laser droit V.png</file>
-        <file>Laser/Laser GB.png</file>
-        <file>Laser/Laser GH.png</file>
         <file>Images/boutonEditeurON.png</file>
         <file>Images/boutonJouerON.png</file>
         <file>Images/chasseur.png</file>
+        <file>Laser/Miroir DB laser.png</file>
+        <file>Laser/Miroir DB.png</file>
+        <file>Laser/Miroir DH laser.png</file>
+        <file>Laser/Miroir DH.png</file>
+        <file>Laser/Miroir GB laser.png</file>
+        <file>Laser/Miroir GB.png</file>
+        <file>Laser/Miroir GH laser.png</file>
+        <file>Laser/Miroir GH.png</file>
     </qresource>
 </RCC>
