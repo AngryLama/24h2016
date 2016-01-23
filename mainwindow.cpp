@@ -102,6 +102,17 @@ MainWindow::MainWindow(QWidget *parent) :
     btnMP->setBrush(QBrush(QPixmap(":/Images/Retour.png").scaledToHeight(80)));
     sceneEditeur->addItem(btnMP);
 
+    //Création du selecteur de niveaux
+    titre[0]=new QGraphicsTextItem("OFFICIEL");
+    titre[0]->setDefaultTextColor(QColor(Qt::white));
+    titre[0]->setFont(QFont("Spylord Laser",50));
+    sceneNiveaux->addItem(titre[0]);
+
+    titre[1]=new QGraphicsTextItem("CUSTOM");
+    titre[1]->setDefaultTextColor(QColor(Qt::white));
+    titre[1]->setFont(QFont("Spylord Laser",50));
+    sceneNiveaux->addItem(titre[1]);
+
     //Connexion à la base de données
     db = QSqlDatabase::addDatabase("QSQLITE");
     db.setDatabaseName("niveaux.sqlite");
@@ -142,7 +153,7 @@ void MainWindow::on_sourisBougee(QPoint position)
             else boutonMenu[1]->setBrush(QBrush(QPixmap(":/Images/boutonEditeur.png").scaledToHeight(boutonMenu[0]->rect().height())));
         }
     }
-    if(jeu->scene()==sceneEditeur || jeu->scene()==sceneJeu)
+    if(jeu->scene()==sceneEditeur || jeu->scene()==sceneJeu || jeu->scene()==sceneNiveaux)
     {
         curseur->setPos(position);
     }
@@ -161,13 +172,8 @@ void MainWindow::on_sourisCliquee(int touche)
                 if(listeItem.last()==boutonMenu[0])
                 {
                     //Choix du niveau
-
-                    /*cadre=new QGraphicsRectItem(0,0,640,640);
-                    cadre->setPos(320,40);
-                    cadre->setPen(*pen);
-                    sceneJeu->addItem(cadre);
-                    sceneJeu->addItem(curseur);
-                    jeu->setScene(sceneJeu);*/
+                    sceneNiveaux->addItem(curseur);
+                    jeu->setScene(sceneNiveaux);
                 }
                 if(listeItem.last()==boutonMenu[1])
                 {
@@ -330,7 +336,6 @@ void MainWindow::on_sourisRelachee()
 
 void MainWindow::on_DialogAccepted(QString nom)
 {
-    qDebug() << nom << endl;
     //Requete pour insérer le niveau
     QSqlQuery query;
     query.prepare("insert into Niveaux (nom, grille0, grille1, grille2, grille3, grille4, grille5, grille6, grille7, off, depart) values (:nom, :grille0, :grille1, :grille2, :grille3, :grille4, :grille5, :grille6, :grille7, :off, :depart);");
