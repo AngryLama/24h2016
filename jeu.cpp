@@ -9,6 +9,11 @@ Jeu::Jeu(QRect geometry, QString elements[16][16]):QGraphicsScene(0,0,geometry.w
     addItem(cadre);
 }
 
+Jeu::~Jeu()
+{
+    clear();
+}
+
 void Jeu::creerMiroir(short sens, QGraphicsPolygonItem *poly)
 {
     QVector<QPoint> tempVect;

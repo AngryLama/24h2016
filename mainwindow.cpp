@@ -48,7 +48,6 @@ MainWindow::MainWindow(QWidget *parent) :
 MainWindow::~MainWindow()
 {
     db.close();
-    sceneJeu->clear();
     delete sceneJeu;
     sceneMenu->clear();
     delete sceneMenu;
@@ -58,8 +57,8 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_sourisBougee(QPoint position)
 {
+    curseur->setPos(position);
     if(jeu->scene()==sceneMenu){
-        curseur->setPos(position);
         //Verification de la collision
         QList<QGraphicsItem*> listeItem = curseur->collidingItems();
         if (listeItem.length()>0)

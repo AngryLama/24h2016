@@ -16,6 +16,7 @@ class Jeu : public QGraphicsScene
 {
 public:
     Jeu(QRect geometry, QString elements[16][16]);
+    ~Jeu();
     void creerMiroir(short sens, QGraphicsPolygonItem *poly);
 
 private:
