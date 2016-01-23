@@ -27,16 +27,16 @@ MainWindow::MainWindow(QWidget *parent) :
 
     //Création du menu
     boutonMenu[0]=new QGraphicsRectItem(QRect(0,0,650,150));
-    boutonMenu[0]->setBrush(QBrush(QPixmap(":/Boutons/Solo inactif.png").scaledToHeight(boutonMenu[0]->rect().height())));
+    boutonMenu[0]->setBrush(QBrush(QPixmap(":/Images/boutonJouer.png").scaledToHeight(boutonMenu[0]->rect().height())));
     boutonMenu[0]->setPos(310,150);
     sceneMenu->addItem(boutonMenu[0]);
 
     boutonMenu[1]=new QGraphicsRectItem(QRect(0,0,650,150));
-    boutonMenu[1]->setBrush(QBrush(QPixmap(":/Boutons/Versus inactif.png").scaledToHeight(boutonMenu[1]->rect().height())));
+    boutonMenu[1]->setBrush(QBrush(QPixmap(":/Images/boutonEditeur.png").scaledToHeight(boutonMenu[1]->rect().height())));
     boutonMenu[1]->setPos(310,450);
     sceneMenu->addItem(boutonMenu[1]);
-    curseur=new QGraphicsEllipseItem(0,0,20,20);
-    curseur->setBrush(QBrush(Qt::white));
+    curseur=new QGraphicsRectItem(0,0,80,80);
+    curseur->setBrush(QBrush(QPixmap(":/Images/curseurMenu.png",).scaledToHeight(curseur->rect().height())));
     sceneMenu->addItem(curseur);
 }
 
@@ -89,7 +89,7 @@ void MainWindow::on_touchePressee(int touche)
 
 void MainWindow::on_sourisBougee(QPoint position)
 {
-
+    curseur->setPos(position);
 }
 
 void MainWindow::on_sourisCliquee()

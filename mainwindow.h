@@ -47,10 +47,8 @@ private:
     Ui::MainWindow *ui;
     Vue *jeu;
     QGraphicsScene *sceneJeu,*sceneMenu;
-    QGraphicsEllipseItem *curseur;
     QPen *pen;
-    QList<int> touchesActives;
-    QGraphicsRectItem *boutonMenu[2];
+    QGraphicsRectItem *curseur,*boutonMenu[2];
 };
 
 #endif // MAINWINDOW_H
