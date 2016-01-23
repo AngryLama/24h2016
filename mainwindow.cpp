@@ -27,12 +27,12 @@ MainWindow::MainWindow(QWidget *parent) :
     pen=new QPen(QBrush(Qt::white),10);
 
     //Création du menu
-    boutonMenu[0]=new QRect(0,0,650,150);
+    boutonMenu[0]=new QGraphicsRectItem(QRect(0,0,650,150));
     boutonMenu[0]->setBrush(QBrush(QPixmap(":/Boutons/Solo inactif.png").scaledToHeight(boutonMenu[0]->rect().height())));
     boutonMenu[0]->setPos(310,150);
     sceneMenu->addItem(boutonMenu[0]);
 
-    boutonMenu[1]=new QRect(0,0,650,150);
+    boutonMenu[1]=new QGraphicsRectItem(QRect(0,0,650,150));
     boutonMenu[1]->setBrush(QBrush(QPixmap(":/Boutons/Versus inactif.png").scaledToHeight(boutonMenu[1]->rect().height())));
     boutonMenu[1]->setPos(310,450);
     sceneMenu->addItem(boutonMenu[1]);

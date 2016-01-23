@@ -19,7 +19,6 @@ SOURCES += main.cpp\
 
 HEADERS  += mainwindow.h \
     laser.h \
-    miroir.h \
     vue.h
 
 FORMS    += mainwindow.ui

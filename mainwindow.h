@@ -52,7 +52,6 @@ private:
     QGraphicsEllipseItem *curseur;
     QPen *pen;
     QList<int> touchesActives;
-    QRect boutonMenu[4];
 };
 
 #endif // MAINWINDOW_H
