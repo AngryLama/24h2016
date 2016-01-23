@@ -59,10 +59,39 @@ void MainWindow::on_touchePressee(int touche)
 
 void MainWindow::on_sourisBougee(QPoint position)
 {
-    curseur->setPos(position);
+    if(jeu->scene()==sceneMenu){
+        curseur->setPos(position);
+        //Verification de la collision
+        QList<QGraphicsItem*> listeItem = curseur->collidingItems();
+        if (listeItem.length()>0)
+        {
+            if (listeItem.last()==boutonMenu[0])
+                boutonMenu[0]->setBrush(QBrush(QPixmap(":/Images/boutonJouer.png").scaledToHeight(boutonMenu[0]->rect().height())));
+            else boutonMenu[0]->setBrush(QBrush(QPixmap(":/Images/boutonJouer.png").scaledToHeight(boutonMenu[0]->rect().height())));
+
+            if (listeItem.last()==boutonMenu[1])
+                boutonMenu[1]->setBrush(QBrush(QPixmap(":/Images/boutonEditeur.png").scaledToHeight(boutonMenu[0]->rect().height())));
+            else boutonMenu[1]->setBrush(QBrush(QPixmap(":/Images/boutonEditeur.png").scaledToHeight(boutonMenu[0]->rect().height())));
+        }
+    }
 }
 
 void MainWindow::on_sourisCliquee()
 {
-
+    if(jeu->scene()==sceneMenu){
+        QList<QGraphicsItem*> listeItem;
+        listeItem = curseur->collidingItems();
+        if (listeItem.length()>0)
+        {
+            if(listeItem.last()==boutonMenu[0])
+            {
+                //Choix du niveau
+                jeu->setScene(sceneNiveaux);
+            }
+            if(listeItem.last()==boutonMenu[1])
+            {
+                //Lancer l'éditeur
+            }
+        }
+    }
 }

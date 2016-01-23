@@ -37,7 +37,7 @@ private slots:
 private:
     Ui::MainWindow *ui;
     Vue *jeu;
-    QGraphicsScene *sceneJeu,*sceneMenu;
+    QGraphicsScene *sceneJeu,*sceneNiveaux,*sceneMenu;
     QPen *pen;
     QGraphicsRectItem *curseur,*boutonMenu[2];
 };
