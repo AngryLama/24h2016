@@ -105,13 +105,35 @@ MainWindow::MainWindow(QWidget *parent) :
     //Création du selecteur de niveaux
     titre[0]=new QGraphicsTextItem("OFFICIEL");
     titre[0]->setDefaultTextColor(QColor(Qt::white));
-    titre[0]->setFont(QFont("Spylord Laser",50));
+    titre[0]->setPos(60,10);
+    titre[0]->setFont(QFont("Spylord Laser",25));
     sceneNiveaux->addItem(titre[0]);
 
     titre[1]=new QGraphicsTextItem("CUSTOM");
     titre[1]->setDefaultTextColor(QColor(Qt::white));
-    titre[1]->setFont(QFont("Spylord Laser",50));
+    titre[1]->setPos(750,10);
+    titre[1]->setFont(QFont("Spylord Laser",25));
     sceneNiveaux->addItem(titre[1]);
+
+    ligne[0]=new QGraphicsLineItem(QLine(0,0,0,(height()/3)*2));
+    ligne[0]->setPen(*pen);
+    ligne[0]->setPos(width()/2,0);
+    sceneNiveaux->addItem(ligne[0]);
+
+    ligne[1]=new QGraphicsLineItem(QLine(0,0,width(),0));
+    ligne[1]->setPen(*pen);
+    ligne[1]->setPos(0,(height()/3)*2);
+    sceneNiveaux->addItem(ligne[1]);
+
+    cadreApercu=new QGraphicsRectItem(0,0,(height()/3)-20,(height()/3)-20);
+    cadreApercu->setPen(*pen);
+    cadreApercu->setPos((width()/4)-(cadreApercu->rect().width()/2)+50,(height()/3)*2+10);
+    sceneNiveaux->addItem(cadreApercu);
+
+    boutonNiveaux[0]=new QGraphicsRectItem(0,0,cadreApercu->pos().x()-50,(height()/3)-20);
+    boutonNiveaux[0]->setBrush(QPixmap(":/Images/Play.png").scaledToHeight(boutonNiveaux[0]->rect().height()));
+    boutonNiveaux[0]->setPos(10,(height()/3)*2+10);
+    sceneNiveaux->addItem(boutonNiveaux[0]);
 
     //Connexion à la base de données
     db = QSqlDatabase::addDatabase("QSQLITE");
@@ -129,6 +151,7 @@ MainWindow::~MainWindow()
     db.close();
     sceneNiveaux->clear();
     delete sceneNiveaux;
+    sceneJeu->clear();
     delete sceneJeu;
     sceneMenu->clear();
     delete sceneMenu;

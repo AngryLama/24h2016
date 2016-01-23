@@ -54,9 +54,9 @@ private:
 
     //Selecteur de niveaux
     QGraphicsTextItem *titre[2];
-    QGraphicsRectItem *zone[2],*boutons[3],*apercu[TAILLE][TAILLE];
+    QGraphicsRectItem *zone[2],*boutonNiveaux[4],*apercu[TAILLE][TAILLE],*cadreApercu;
     QList<QGraphicsRectItem*> offi,user;
-
+    QGraphicsLineItem *ligne[2];
 
 };
 
