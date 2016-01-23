@@ -68,8 +68,8 @@ MainWindow::MainWindow(QWidget *parent) :
     selection[1]->setBrush(QBrush(QPixmap(":/Laser/Miroir DH.png").scaledToHeight(selection[0]->rect().height())));
     selection[2]->setBrush(QBrush(QPixmap(":/Laser/Miroir GB.png").scaledToHeight(selection[0]->rect().height())));
     selection[3]->setBrush(QBrush(QPixmap(":/Laser/Miroir DB.png").scaledToHeight(selection[0]->rect().height())));
-    selection[4]->setBrush(QBrush(QPixmap(":/Laser/Mur H.png").scaledToHeight(selection[0]->rect().height())));
-    selection[5]->setBrush(QBrush(QPixmap(":/Laser/Mur V.png").scaledToHeight(selection[0]->rect().height())));
+    selection[4]->setBrush(QBrush(QPixmap(":/Laser/Mur.png").scaledToHeight(selection[0]->rect().height())));
+    selection[5]->setBrush(QBrush(QPixmap(":/Images/chasseur.png").scaledToHeight(selection[0]->rect().height())));
 
     for(int x=0;x<6;x++)
         sceneEditeur->addItem(selection[x]);
@@ -239,58 +239,61 @@ void MainWindow::on_sourisRelachee()
         if (listeItem.length()>0)
         {
             bool verifTableau=false;
-            int x,y;
-            for(x=0;x<TAILLE;x++)
+            int cx,cy;
+            for(int x=0;x<TAILLE;x++)
             {
-                for(y=0;y<TAILLE;y++)
+                for(int y=0;y<TAILLE;y++)
                 {
                     if(listeItem.last()==tableau[x][y])
                     {
                         verifTableau=true;
+                        cx=x;
+                        cy=y;
                     }
                 }
             }
             if(verifTableau && currentSelection!=-1)
             {
-                tableau[x][y]->setBrush(curseurJeu->brush());
+                tableau[cx][cy]->setBrush(curseurJeu->brush());
                 curseurJeu->setBrush(QBrush(QPixmap(":/Images/curseurVert.png").scaledToHeight(curseurJeu->rect().height())));
                 switch (currentSelection) {
                 case 0:
-                    base[x][y]="GH";
+                    base[cx][cy]="GH";
                     break;
                 case 1:
-                    base[x][y]="DH";
+                    base[cx][cy]="DH";
                     break;
                 case 2:
-                    base[x][y]="GB";
+                    base[cx][cy]="GB";
                     break;
                 case 3:
-                    base[x][y]="DB";
+                    base[cx][cy]="DB";
                     break;
                 case 4:
-                    base[x][y]="MH";
+                    base[cx][cy]="M";
                     break;
                 case 5:
-                    base[x][y]="MV";
+                    base[cx][cy]="TIE";
                     break;
                 default:
                     break;
                 }
             }else{
                 bool verifDepart=false;
-                for(x=0;x<TAILLE;x++)
+                for(int x=0;x<TAILLE;x++)
                 {
                     if(listeItem.last()==indicDepart[x])
                     {
                         verifDepart=true;
+                        cx=x;
                     }
                 }
                 if(verifDepart)
                 {
                     for(int y=0;y<TAILLE;y++)
-                        indicDepart[y]->setBrush(QBrush(QPixmap(":/Images/depart.png").scaledToHeight(indicDepart[x]->rect().height())));
-                    indicDepart[x]->setBrush(QBrush(QPixmap(":/Images/fighter.png").scaledToHeight(indicDepart[x]->rect().height())));
-                    depart=x;
+                        indicDepart[y]->setBrush(QBrush(QPixmap(":/Images/depart.png").scaledToHeight(indicDepart[y]->rect().height())));
+                    indicDepart[cx]->setBrush(QBrush(QPixmap(":/Images/fighter.png").scaledToHeight(indicDepart[cx]->rect().height())));
+                    depart=cx;
                 }else{
                     currentSelection=-1;
                     curseurJeu->setBrush(QBrush(QPixmap(":/Images/curseurVert.png").scaledToHeight(curseurJeu->rect().height())));
