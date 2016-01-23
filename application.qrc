@@ -24,5 +24,8 @@
         <file>Images/Enregistrer.png</file>
         <file>Images/iconeJeu.png</file>
         <file>Images/Retour.png</file>
+        <file>Images/Editer fichier.png</file>
+        <file>Images/Play.png</file>
+        <file>Images/Supprimer.png</file>
     </qresource>
 </RCC>
