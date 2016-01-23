@@ -15,12 +15,12 @@ enum{
 class Jeu : public QGraphicsScene
 {
 public:
-    Jeu(QString levelPath=0);
+    Jeu(QRect geometry, QString elements[16][16]);
     void creerMiroir(short sens, QGraphicsPolygonItem *poly);
 
 private:
     QList<QGraphicsPolygonItem*> miroir;
-
+    QGraphicsRectItem *cadre;
 };
 
 #endif // JEU_H

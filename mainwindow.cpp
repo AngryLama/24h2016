@@ -20,7 +20,6 @@ MainWindow::MainWindow(QWidget *parent) :
         qDebug() << "Erreur de connexion du signal sourisCliquee au slot on_sourisCliquee";
 
     //Création de la scène
-    sceneJeu = new QGraphicsScene(0,0,640,640);
     sceneMenu = new QGraphicsScene(0,0,geometry().width()-10,geometry().height()-10);
 
     jeu->setScene(sceneMenu);
@@ -89,11 +88,15 @@ void MainWindow::on_sourisCliquee()
             if(listeItem.last()==boutonMenu[0])
             {
                 //Choix du niveau
-                jeu->setScene(sceneNiveaux);
+                QString temp[16][16];
+                sceneJeu=new Jeu(geometry(),temp);
+                jeu->setScene(sceneJeu);
             }
             if(listeItem.last()==boutonMenu[1])
             {
                 //Lancer l'éditeur
+                sceneEditeur=new Editeur(geometry());
+                jeu->setScene(sceneEditeur);
             }
         }
     }

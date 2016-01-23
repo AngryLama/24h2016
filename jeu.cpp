@@ -1,8 +1,12 @@
 #include "jeu.h"
 
-Jeu::Jeu(QString levelPath)
+Jeu::Jeu(QRect geometry, QString elements[16][16]):QGraphicsScene(0,0,geometry.width()-10,geometry.height()-10)
 {
-
+    //Création du cadre
+    cadre=new QGraphicsRectItem(0,0,640,640);
+    cadre->setPos(320,40);
+    cadre->setPen(QPen(Qt::white,5));
+    addItem(cadre);
 }
 
 void Jeu::creerMiroir(short sens, QGraphicsPolygonItem *poly)

@@ -6,7 +6,9 @@
 class Editeur : public Jeu
 {
 public:
-    Editeur();
+    Editeur(QRect geometry);
+private:
+    QString tableau[16][16];
 };
 
 #endif // EDITEUR_H

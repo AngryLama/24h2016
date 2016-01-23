@@ -1,6 +1,6 @@
 #include "editeur.h"
 
-Editeur::Editeur()
+Editeur::Editeur(QRect geometry):Jeu(geometry,tableau)
 {
 
 }
