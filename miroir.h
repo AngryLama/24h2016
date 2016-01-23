@@ -2,16 +2,28 @@
 #define MIROIR_H
 
 #include <QObject>
+#include <QGraphicsPolygonItem>
 
-class Miroir : public QObject
+enum{
+    GH,
+    DH,
+    GB,
+    DB
+};
+
+class Miroir : public QObject, public QGraphicsPolygonItem
 {
     Q_OBJECT
 public:
-    explicit Miroir(QObject *parent = 0);
+    explicit Miroir(short sens, QObject *parent = 0);
+    ~Miroir();
 
 signals:
 
 public slots:
+
+private:
+    QLine *segment[2];
 };
 
 #endif // MIROIR_H
