@@ -4,5 +4,11 @@
         <file>Images/boutonEditeur.png</file>
         <file>Images/boutonJouer.png</file>
         <file>Images/curseurMenu.png</file>
+        <file>Laser/Laser DB.png</file>
+        <file>Laser/Laser DH.png</file>
+        <file>Laser/Laser droit H.png</file>
+        <file>Laser/Laser droit V.png</file>
+        <file>Laser/Laser GB.png</file>
+        <file>Laser/Laser GH.png</file>
     </qresource>
 </RCC>
