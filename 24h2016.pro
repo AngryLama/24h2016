@@ -13,8 +13,14 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        mainwindow.cpp
+        mainwindow.cpp \
+    laser.cpp \
+    miroir.cpp \
+    vue.cpp
 
-HEADERS  += mainwindow.h
+HEADERS  += mainwindow.h \
+    laser.h \
+    miroir.h \
+    vue.h
 
 FORMS    += mainwindow.ui
