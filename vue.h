@@ -2,7 +2,7 @@
 #define VUE_H
 
 #include <QGraphicsView>
-#include <QKeyEvent>
+#include <QMouseEvent>
 
 class Vue : public QGraphicsView
 {
@@ -11,21 +11,11 @@ public:
     explicit Vue(QRect geometry, QWidget *parent = 0);
 
 signals:
-    void touchePressee(int);
-
-    void toucheRelachee(int);
-
     void sourisBougee(QPoint);
-
     void sourisCliquee();
 
 public slots:
-    void keyPressEvent(QKeyEvent *event);
-
-    void keyReleaseEvent(QKeyEvent *event);
-
     void mouseMoveEvent(QMouseEvent *event);
-
     void mousePressEvent(QMouseEvent *event);
 };
 

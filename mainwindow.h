@@ -29,12 +29,10 @@ public:
     ~MainWindow();
 
 signals:
-    void touchePressee(int);
     void sourisBougee(QPoint);
     void sourisCliquee();
 
 private slots:
-    void on_touchePressee(int touche);
     void on_sourisBougee(QPoint position);
     void on_sourisCliquee();
 
@@ -44,9 +42,8 @@ private:
     Jeu *sceneJeu;
     Editeur *sceneEditeur;
     QGraphicsScene *sceneNiveaux,*sceneMenu;
-    QPen *pen;
     QGraphicsRectItem *curseur,*boutonMenu[2];
-    QSqlDatabase *db;
+    QSqlDatabase db;
 };
 
 #endif // MAINWINDOW_H

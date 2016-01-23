@@ -12,8 +12,6 @@ MainWindow::MainWindow(QWidget *parent) :
 
     //Création de la vue
     jeu=new Vue(geometry(),this);
-    if( !connect(jeu,SIGNAL(touchePressee(int)),this,SLOT(on_touchePressee(int))) )
-        qDebug() << "Erreur de connexion du signal touchePressee au slot on_touchePressee";
     if( !connect(jeu,SIGNAL(sourisBougee(QPoint)),this,SLOT(on_sourisBougee(QPoint))) )
         qDebug() << "Erreur de connexion du signal sourisBougee au slot on_sourisBougee";
     if( !connect(jeu,SIGNAL(sourisCliquee()),this,SLOT(on_sourisCliquee())) )
@@ -24,9 +22,6 @@ MainWindow::MainWindow(QWidget *parent) :
 
     jeu->setScene(sceneMenu);
     jeu->setBackgroundBrush(QBrush(QPixmap(":/Images/bgMenu.jpg").scaledToHeight(geometry().height()-10)));
-
-    //Initialisation du pinceau
-    pen=new QPen(QBrush(Qt::white),10);
 
     //Création du menu
     boutonMenu[0]=new QGraphicsRectItem(QRect(0,0,650,150));
@@ -41,22 +36,24 @@ MainWindow::MainWindow(QWidget *parent) :
     curseur=new QGraphicsRectItem(0,0,80,80);
     curseur->setBrush(QBrush(QPixmap(":/Images/curseurMenu.png").scaledToHeight(curseur->rect().height())));
     sceneMenu->addItem(curseur);
+
+    //Connexion à la base de données
+    db = QSqlDatabase::addDatabase("QSQLITE");
+    db.setDatabaseName("niveaux.sqlite");
+    if( db.open() )
+        qDebug() << "Ouverture de la base de donnees avec succes";
+    else qDebug() << "Echec d'ouverture de la base de donnees";
 }
 
 MainWindow::~MainWindow()
 {
+    db.close();
     sceneJeu->clear();
     delete sceneJeu;
     sceneMenu->clear();
     delete sceneMenu;
-    delete pen;
     delete jeu;
     delete ui;
-}
-
-void MainWindow::on_touchePressee(int touche)
-{
-
 }
 
 void MainWindow::on_sourisBougee(QPoint position)
