@@ -20,3 +20,8 @@ void Vue::mousePressEvent(QMouseEvent *event)
     if(event->button()==Qt::LeftButton)
         emit sourisCliquee();
 }
+
+void Vue::mouseReleaseEvent(QMouseEvent *event)
+{
+    emit sourisRelachee();
+}

@@ -17,5 +17,7 @@
         <file>Laser/Miroir GB.png</file>
         <file>Laser/Miroir GH laser.png</file>
         <file>Laser/Miroir GH.png</file>
+        <file>Laser/Mur H.png</file>
+        <file>Laser/Mur V.png</file>
     </qresource>
 </RCC>

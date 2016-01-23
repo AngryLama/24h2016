@@ -28,13 +28,10 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
-signals:
-    void sourisBougee(QPoint);
-    void sourisCliquee();
-
 private slots:
     void on_sourisBougee(QPoint position);
     void on_sourisCliquee();
+    void on_sourisRelachee();
 
 private:
     Ui::MainWindow *ui;

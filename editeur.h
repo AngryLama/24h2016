@@ -11,7 +11,7 @@ public:
     ~Editeur();
 private:
     QString tableau[16][16];
-    QGraphicsRectItem *selection[8];
+    QGraphicsRectItem *selection[6];
     QPen *pen;
 };
 

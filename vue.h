@@ -13,10 +13,12 @@ public:
 signals:
     void sourisBougee(QPoint);
     void sourisCliquee();
+    void sourisRelachee();
 
 public slots:
     void mouseMoveEvent(QMouseEvent *event);
     void mousePressEvent(QMouseEvent *event);
+    void mouseReleaseEvent(QMouseEvent *event);
 };
 
 #endif // VUE_H
