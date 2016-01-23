@@ -14,12 +14,15 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    vue.cpp
+    vue.cpp \
+    dialognomniveau.cpp
 
 HEADERS  += mainwindow.h \
-    vue.h
+    vue.h \
+    dialognomniveau.h
 
-FORMS    += mainwindow.ui
+FORMS    += mainwindow.ui \
+    dialognomniveau.ui
 
 RESOURCES += \
     application.qrc
