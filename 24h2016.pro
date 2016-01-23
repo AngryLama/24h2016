@@ -15,11 +15,13 @@ TEMPLATE = app
 SOURCES += main.cpp\
         mainwindow.cpp \
     laser.cpp \
-    vue.cpp
+    vue.cpp \
+    jeu.cpp
 
 HEADERS  += mainwindow.h \
     laser.h \
-    vue.h
+    vue.h \
+    jeu.h
 
 FORMS    += mainwindow.ui
 
