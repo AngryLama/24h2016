@@ -14,14 +14,10 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    laser.cpp \
-    vue.cpp \
-    choixniveau.cpp
+    vue.cpp
 
 HEADERS  += mainwindow.h \
-    laser.h \
-    vue.h \
-    choixniveau.h
+    vue.h
 
 FORMS    += mainwindow.ui
 

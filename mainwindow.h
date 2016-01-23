@@ -14,7 +14,6 @@
 #include <QSqlQuery>
 #include "vue.h"
 #include "laser.h"
-#include "choixniveau.h"
 
 namespace Ui {
 class MainWindow;

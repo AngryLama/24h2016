@@ -42,6 +42,9 @@ MainWindow::MainWindow(QWidget *parent) :
     curseur->setBrush(QBrush(QPixmap(":/Images/curseurMenu.png").scaledToHeight(curseur->rect().height())));
     sceneMenu->addItem(curseur);
 
+    //Création du sélecteur de niveau
+    sceneNiveaux=new QGraphicsScene(0,0,geometry().width()-10,geometry().height()-10);
+
     //Création du jeu
     sceneJeu=new QGraphicsScene(0,0,geometry().width()-10,geometry().height()-10);
 
@@ -78,6 +81,8 @@ MainWindow::~MainWindow()
     delete sceneEditeur;
     delete pen;
     db.close();
+    sceneNiveaux->clear();
+    delete sceneNiveaux;
     delete sceneJeu;
     sceneMenu->clear();
     delete sceneMenu;
@@ -114,14 +119,13 @@ void MainWindow::on_sourisCliquee()
             if(listeItem.last()==boutonMenu[0])
             {
                 //Choix du niveau
-                //sceneNiveaux = new choixNiveau(geometry());
-                //sceneNiveaux->addItem(curseur);
-                cadre=new QGraphicsRectItem(0,0,640,640);
+
+                /*cadre=new QGraphicsRectItem(0,0,640,640);
                 cadre->setPos(320,40);
                 cadre->setPen(*pen);
                 sceneJeu->addItem(cadre);
                 sceneJeu->addItem(curseur);
-                jeu->setScene(sceneJeu);
+                jeu->setScene(sceneJeu);*/
             }
             if(listeItem.last()==boutonMenu[1])
             {
