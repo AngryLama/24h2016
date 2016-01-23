@@ -51,6 +51,13 @@ private:
     short currentSelection,depart;
     QPen *pen;
     DialogNomNiveau *dialNomNiv;
+
+    //Selecteur de niveaux
+    QGraphicsTextItem *titre[2];
+    QGraphicsRectItem *zone[2],*boutons[3],*apercu[TAILLE][TAILLE];
+    QList<QGraphicsRectItem*> offi,user;
+
+
 };
 
 #endif // MAINWINDOW_H
