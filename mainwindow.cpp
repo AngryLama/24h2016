@@ -41,12 +41,12 @@ MainWindow::MainWindow(QWidget *parent) :
 
     //Création du curseur du menu
     curseurMenu=new QGraphicsRectItem(0,0,80,80);
-    curseurMenu->setBrush(QBrush(QPixmap(":/Images/fighter.png").scaledToHeight(curseurMenu->rect().height())));
+    curseurMenu->setBrush(QBrush(QPixmap(":/Images/curseurVert.png").scaledToHeight(curseurMenu->rect().height())));
     sceneMenu->addItem(curseurMenu);
 
     //Création du curseur en jeu
     curseurJeu=new QGraphicsRectItem(0,0,80,80);
-    curseurJeu->setBrush(QBrush(QPixmap(":/Images/fighter.png").scaledToHeight(curseurJeu->rect().height())));
+    curseurJeu->setBrush(QBrush(QPixmap(":/Images/curseurVert.png").scaledToHeight(curseurJeu->rect().height())));
 
     //Création du sélecteur de niveau
     sceneNiveaux=new QGraphicsScene(0,0,geometry().width()-10,geometry().height()-10);
@@ -97,6 +97,12 @@ MainWindow::MainWindow(QWidget *parent) :
         }
     }
 
+    //Création du bouton enregistrer de l'éditeur
+    btnSave = new QGraphicsRectItem(0,0,80,80);
+    btnSave->setPos(40,40);
+    btnSave->setBrush(QBrush(QPixmap(":/Images/Enregistrer.png").scaledToHeight(80)));
+    sceneEditeur->addItem(btnSave);
+
     //Connexion à la base de données
     db = QSqlDatabase::addDatabase("QSQLITE");
     db.setDatabaseName("niveaux.sqlite");
@@ -145,6 +151,7 @@ void MainWindow::on_sourisBougee(QPoint position)
 
 void MainWindow::on_sourisCliquee(int touche)
 {
+    curseurMenu->setBrush(QBrush(QPixmap(":/Images/curseurRouge.png").scaledToHeight(curseurMenu->rect().height())));
     QList<QGraphicsItem*> listeItem;
     if(touche==Qt::LeftButton)
     {
@@ -227,6 +234,7 @@ void MainWindow::on_sourisCliquee(int touche)
 
 void MainWindow::on_sourisRelachee()
 {
+    curseurMenu->setBrush(QBrush(QPixmap(":/Images/curseurVert.png").scaledToHeight(curseurMenu->rect().height())));
     if(jeu->scene()==sceneEditeur)
     {
         QList<QGraphicsItem*> listeItem;
@@ -248,7 +256,7 @@ void MainWindow::on_sourisRelachee()
             if(verifTableau && currentSelection!=-1)
             {
                 tableau[x][y]->setBrush(curseurJeu->brush());
-                curseurJeu->setBrush(QBrush(QPixmap(":/Images/fighter.png").scaledToHeight(curseurJeu->rect().height())));
+                curseurJeu->setBrush(QBrush(QPixmap(":/Images/curseurVert.png").scaledToHeight(curseurJeu->rect().height())));
                 switch (currentSelection) {
                 case 0:
                     base[x][y]="GH";
@@ -273,7 +281,6 @@ void MainWindow::on_sourisRelachee()
                 }
             }else{
                 bool verifDepart=false;
-                int x;
                 for(x=0;x<TAILLE;x++)
                 {
                     if(listeItem.last()==indicDepart[x])
@@ -289,7 +296,7 @@ void MainWindow::on_sourisRelachee()
                     depart=x;
                 }else{
                     currentSelection=-1;
-                    curseurJeu->setBrush(QBrush(QPixmap(":/Images/fighter.png").scaledToHeight(curseurJeu->rect().height())));
+                    curseurJeu->setBrush(QBrush(QPixmap(":/Images/curseurVert.png").scaledToHeight(curseurJeu->rect().height())));
                 }
             }
         }

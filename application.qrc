@@ -20,5 +20,8 @@
         <file>Laser/Miroir GH.png</file>
         <file>Images/fighter.png</file>
         <file>Images/depart.png</file>
+        <file>Images/curseurRouge.png</file>
+        <file>Images/curseurVert.png</file>
+        <file>Images/Enregistrer.png</file>
     </qresource>
 </RCC>
