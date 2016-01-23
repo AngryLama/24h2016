@@ -15,6 +15,8 @@
 #include "vue.h"
 #include "editeur.h"
 #include "laser.h"
+#include "choixniveau.h"
+#include "jeu.h"
 
 namespace Ui {
 class MainWindow;

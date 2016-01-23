@@ -7,6 +7,9 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    ui->grpLvlBase->hide();
+    ui->grpLvlEdit->hide();
+
     //Importation de la police d'ecriture
     QFontDatabase::addApplicationFont(":/Spyv3l.ttf"); //Spylord Laser
 
@@ -86,14 +89,18 @@ void MainWindow::on_sourisCliquee()
             if(listeItem.last()==boutonMenu[0])
             {
                 //Choix du niveau
+                //sceneNiveaux = new choixNiveau(geometry());
+                //sceneNiveaux->addItem(curseur);
                 QString temp[16][16];
                 sceneJeu=new Jeu(geometry(),temp);
+                sceneJeu->addItem(curseur);
                 jeu->setScene(sceneJeu);
             }
             if(listeItem.last()==boutonMenu[1])
             {
                 //Lancer l'éditeur
                 sceneEditeur=new Editeur(geometry());
+                sceneEditeur->addItem(curseur);
                 jeu->setScene(sceneEditeur);
             }
         }
