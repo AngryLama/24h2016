@@ -22,5 +22,6 @@
         <file>Images/curseurVert.png</file>
         <file>Laser/Mur.png</file>
         <file>Images/Enregistrer.png</file>
+        <file>Images/iconeJeu.png</file>
     </qresource>
 </RCC>

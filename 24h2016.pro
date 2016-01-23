@@ -26,3 +26,8 @@ FORMS    += mainwindow.ui \
 
 RESOURCES += \
     application.qrc
+
+DISTFILES += \
+    myapp.rc
+
+RC_FILE = myapp.rc

@@ -16,9 +16,15 @@
   <property name="windowTitle">
    <string>Lazor Major</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="application.qrc">
+    <normaloff>:/Images/iconeJeu.png</normaloff>:/Images/iconeJeu.png</iconset>
+  </property>
   <widget class="QWidget" name="centralWidget"/>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <resources/>
+ <resources>
+  <include location="application.qrc"/>
+ </resources>
  <connections/>
 </ui>
