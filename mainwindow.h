@@ -13,10 +13,8 @@
 #include <QSqlDatabase>
 #include <QSqlQuery>
 #include "vue.h"
-#include "editeur.h"
 #include "laser.h"
 #include "choixniveau.h"
-#include "jeu.h"
 
 namespace Ui {
 class MainWindow;
@@ -38,11 +36,18 @@ private slots:
 private:
     Ui::MainWindow *ui;
     Vue *jeu;
-    Jeu *sceneJeu;
-    Editeur *sceneEditeur;
-    QGraphicsScene *sceneNiveaux,*sceneMenu;
+    QGraphicsScene *sceneNiveaux,*sceneMenu,*sceneJeu,*sceneEditeur;
     QGraphicsRectItem *curseur,*boutonMenu[2];
     QSqlDatabase db;
+
+    //Jeu
+    QGraphicsRectItem *cadre;
+    QGraphicsRectItem *cases[16][16];
+
+    //Editeur
+    QString tableau[16][16];
+    QGraphicsRectItem *selection[6];
+    QPen *pen;
 };
 
 #endif // MAINWINDOW_H

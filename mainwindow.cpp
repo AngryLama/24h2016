@@ -42,6 +42,28 @@ MainWindow::MainWindow(QWidget *parent) :
     curseur->setBrush(QBrush(QPixmap(":/Images/curseurMenu.png").scaledToHeight(curseur->rect().height())));
     sceneMenu->addItem(curseur);
 
+    //Création du jeu
+    sceneJeu=new QGraphicsScene(0,0,geometry().width()-10,geometry().height()-10);
+
+    //Création de l'éditeur
+    sceneEditeur=new QGraphicsScene(0,0,geometry().width()-10,geometry().height()-10);
+    pen=new QPen(Qt::white,5);
+    for(int x=0;x<6;x++){
+        selection[x]=new QGraphicsRectItem(0,0,80,80);
+        selection[x]->setPos(1100,40+(110*x));
+        selection[x]->setPen(*pen);
+    }
+
+    selection[0]->setBrush(QBrush(QPixmap(":/Laser/Miroir GH.png").scaledToHeight(selection[0]->rect().height())));
+    selection[1]->setBrush(QBrush(QPixmap(":/Laser/Miroir DH.png").scaledToHeight(selection[0]->rect().height())));
+    selection[2]->setBrush(QBrush(QPixmap(":/Laser/Miroir GB.png").scaledToHeight(selection[0]->rect().height())));
+    selection[3]->setBrush(QBrush(QPixmap(":/Laser/Miroir DB.png").scaledToHeight(selection[0]->rect().height())));
+    selection[4]->setBrush(QBrush(QPixmap(":/Laser/Mur H.png").scaledToHeight(selection[0]->rect().height())));
+    selection[5]->setBrush(QBrush(QPixmap(":/Laser/Mur V.png").scaledToHeight(selection[0]->rect().height())));
+
+    for(int x=0;x<6;x++)
+        sceneEditeur->addItem(selection[x]);
+
     //Connexion à la base de données
     db = QSqlDatabase::addDatabase("QSQLITE");
     db.setDatabaseName("niveaux.sqlite");
@@ -52,6 +74,9 @@ MainWindow::MainWindow(QWidget *parent) :
 
 MainWindow::~MainWindow()
 {
+    sceneEditeur->clear();
+    delete sceneEditeur;
+    delete pen;
     db.close();
     delete sceneJeu;
     sceneMenu->clear();
@@ -81,30 +106,38 @@ void MainWindow::on_sourisBougee(QPoint position)
 
 void MainWindow::on_sourisCliquee()
 {
-    if(jeu->scene()==sceneMenu){
-        QList<QGraphicsItem*> listeItem;
-        listeItem = curseur->collidingItems();
-        if (listeItem.length()>0)
-        {
+    QList<QGraphicsItem*> listeItem;
+    listeItem = curseur->collidingItems();
+    if (listeItem.length()>0)
+    {
+        if(jeu->scene()==sceneMenu){
             if(listeItem.last()==boutonMenu[0])
             {
                 //Choix du niveau
                 //sceneNiveaux = new choixNiveau(geometry());
                 //sceneNiveaux->addItem(curseur);
-                QString temp[16][16];
-                sceneJeu=new Jeu(geometry(),temp);
+                cadre=new QGraphicsRectItem(0,0,640,640);
+                cadre->setPos(320,40);
+                cadre->setPen(*pen);
+                sceneJeu->addItem(cadre);
                 sceneJeu->addItem(curseur);
                 jeu->setScene(sceneJeu);
             }
             if(listeItem.last()==boutonMenu[1])
             {
                 //Lancer l'éditeur
-                sceneEditeur=new Editeur(geometry());
+                cadre=new QGraphicsRectItem(0,0,640,640);
+                cadre->setPos(320,40);
+                cadre->setPen(*pen);
+                sceneEditeur->addItem(cadre);
                 sceneEditeur->addItem(curseur);
                 jeu->setScene(sceneEditeur);
             }
         }
-}
+        if(jeu->scene()==sceneEditeur){
+
+        }
+    }
 }
 
 void MainWindow::on_sourisRelachee()
