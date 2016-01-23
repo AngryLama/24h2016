@@ -14,7 +14,7 @@
    <cursorShape>BlankCursor</cursorShape>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>Lazor Major</string>
   </property>
   <widget class="QWidget" name="centralWidget"/>
  </widget>

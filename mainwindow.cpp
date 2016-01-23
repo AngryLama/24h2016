@@ -21,6 +21,7 @@ MainWindow::MainWindow(QWidget *parent) :
     sceneMenu = new QGraphicsScene(0,0,geometry().width()-10,geometry().height()-10);
 
     jeu->setScene(sceneMenu);
+    jeu->setBackgroundBrush(QBrush(QPixmap(":/Images/bgMenu.jpg").scaledToHeight(geometry().height()-10)));
 
     //Initialisation du pinceau
     pen=new QPen(QBrush(Qt::white),10);
@@ -42,6 +43,12 @@ MainWindow::MainWindow(QWidget *parent) :
 
 MainWindow::~MainWindow()
 {
+    sceneJeu->clear();
+    delete sceneJeu;
+    sceneMenu->clear();
+    delete sceneMenu;
+    delete pen;
+    delete jeu;
     delete ui;
 }
 
