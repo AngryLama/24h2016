@@ -10,5 +10,7 @@
         <file>Laser/Laser droit V.png</file>
         <file>Laser/Laser GB.png</file>
         <file>Laser/Laser GH.png</file>
+        <file>Images/boutonEditeurON.png</file>
+        <file>Images/boutonJouerON.png</file>
     </qresource>
 </RCC>

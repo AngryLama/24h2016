@@ -9,6 +9,7 @@
 #include <QEventLoop>
 #include <QFontDatabase>
 #include <QLabel>
+#include <QDebug>
 #include "vue.h"
 #include "laser.h"
 

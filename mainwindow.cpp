@@ -12,9 +12,12 @@ MainWindow::MainWindow(QWidget *parent) :
 
     //Création de la vue
     jeu=new Vue(geometry(),this);
-    connect(jeu,SIGNAL(touchePressee(int)),this,SLOT(on_touchePressee(int)));
-    connect(jeu,SIGNAL(sourisBougee(QPoint)),this,SLOT(on_sourisBougee(QPoint)));
-    connect(jeu,SIGNAL(sourisCliquee()),this,SLOT(on_sourisCliquee()));
+    if( !connect(jeu,SIGNAL(touchePressee(int)),this,SLOT(on_touchePressee(int))) )
+        qDebug() << "Erreur de connexion du signal touchePressee au slot on_touchePressee";
+    if( !connect(jeu,SIGNAL(sourisBougee(QPoint)),this,SLOT(on_sourisBougee(QPoint))) )
+        qDebug() << "Erreur de connexion du signal sourisBougee au slot on_sourisBougee";
+    if( !connect(jeu,SIGNAL(sourisCliquee()),this,SLOT(on_sourisCliquee())) )
+        qDebug() << "Erreur de connexion du signal sourisCliquee au slot on_sourisCliquee";
 
     //Création de la scène
     sceneJeu = new QGraphicsScene(0,0,640,640);
@@ -65,12 +68,12 @@ void MainWindow::on_sourisBougee(QPoint position)
         QList<QGraphicsItem*> listeItem = curseur->collidingItems();
         if (listeItem.length()>0)
         {
-            if (listeItem.last()==boutonMenu[0])
-                boutonMenu[0]->setBrush(QBrush(QPixmap(":/Images/boutonJouer.png").scaledToHeight(boutonMenu[0]->rect().height())));
+            if (listeItem.last()==boutonMenu[0]) //Si il y a collision avec Jouer, alors on charge l'image hover
+                boutonMenu[0]->setBrush(QBrush(QPixmap(":/Images/boutonJouerON.png").scaledToHeight(boutonMenu[0]->rect().height())));
             else boutonMenu[0]->setBrush(QBrush(QPixmap(":/Images/boutonJouer.png").scaledToHeight(boutonMenu[0]->rect().height())));
 
-            if (listeItem.last()==boutonMenu[1])
-                boutonMenu[1]->setBrush(QBrush(QPixmap(":/Images/boutonEditeur.png").scaledToHeight(boutonMenu[0]->rect().height())));
+            if (listeItem.last()==boutonMenu[1]) //Si il y a collision avec Editeur, alors on charge l'image hover
+                boutonMenu[1]->setBrush(QBrush(QPixmap(":/Images/boutonEditeurON.png").scaledToHeight(boutonMenu[0]->rect().height())));
             else boutonMenu[1]->setBrush(QBrush(QPixmap(":/Images/boutonEditeur.png").scaledToHeight(boutonMenu[0]->rect().height())));
         }
     }
