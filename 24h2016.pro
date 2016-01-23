@@ -22,3 +22,6 @@ HEADERS  += mainwindow.h \
     vue.h
 
 FORMS    += mainwindow.ui
+
+RESOURCES += \
+    application.qrc
