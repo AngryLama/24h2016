@@ -10,6 +10,8 @@
 #include <QFontDatabase>
 #include <QLabel>
 #include <QDebug>
+#include <QSqlDatabase>
+#include <QSqlQuery>
 #include "vue.h"
 #include "editeur.h"
 #include "laser.h"
@@ -44,6 +46,7 @@ private:
     QGraphicsScene *sceneNiveaux,*sceneMenu;
     QPen *pen;
     QGraphicsRectItem *curseur,*boutonMenu[2];
+    QSqlDatabase *db;
 };
 
 #endif // MAINWINDOW_H

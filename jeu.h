@@ -19,8 +19,8 @@ public:
     void creerMiroir(short sens, QGraphicsPolygonItem *poly);
 
 private:
-    QList<QGraphicsPolygonItem*> miroir;
     QGraphicsRectItem *cadre;
+    QGraphicsRectItem *cases[16][16];
 };
 
 #endif // JEU_H
