@@ -13,7 +13,6 @@ MainWindow::MainWindow(QWidget *parent) :
     //Création de la vue
     jeu=new Vue(geometry(),this);
     connect(jeu,SIGNAL(touchePressee(int)),this,SLOT(on_touchePressee(int)));
-    connect(jeu,SIGNAL(toucheRelachee(int)),this,SLOT(on_toucheRelachee(int)));
     connect(jeu,SIGNAL(sourisBougee(QPoint)),this,SLOT(on_sourisBougee(QPoint)));
     connect(jeu,SIGNAL(sourisCliquee()),this,SLOT(on_sourisCliquee()));
 
@@ -81,4 +80,19 @@ void MainWindow::creerMiroir(short sens, QGraphicsPolygonItem *poly)
     default:
         break;
     }
+}
+
+void MainWindow::on_touchePressee(int touche)
+{
+
+}
+
+void MainWindow::on_sourisBougee(QPoint position)
+{
+
+}
+
+void MainWindow::on_sourisCliquee()
+{
+
 }

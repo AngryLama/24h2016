@@ -35,14 +35,12 @@ public:
 
 signals:
     void touchePressee(int);
-    void toucheRelachee(int);
     void sourisBougee(QPoint);
     void sourisCliquee();
 
 private slots:
-    void on_touchePressee(int);
-    void on_toucheRelachee(int);
-    void on_sourisBougee(QPoint);
+    void on_touchePressee(int touche);
+    void on_sourisBougee(QPoint position);
     void on_sourisCliquee();
 
 private:
@@ -52,6 +50,7 @@ private:
     QGraphicsEllipseItem *curseur;
     QPen *pen;
     QList<int> touchesActives;
+    QGraphicsRectItem *boutonMenu[2];
 };
 
 #endif // MAINWINDOW_H
