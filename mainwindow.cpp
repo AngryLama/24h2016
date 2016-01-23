@@ -334,7 +334,7 @@ void MainWindow::on_DialogAccepted(QString nom)
     //Requete pour insérer le niveau
     QSqlQuery query;
     query.prepare("insert into Niveaux (nom, grille0, grille1, grille2, grille3, grille4, grille5, grille6, grille7, off, depart) values (:nom, :grille0, :grille1, :grille2, :grille3, :grille4, :grille5, :grille6, :grille7, :off, :depart);");
-    query.bindValue(":nom, :grille1, :grille2, :grille3, :grille4, :grille5, :grille6, :grille7, :off, :depart", nom);
+    query.bindValue(":nom", nom);
     for(int x=0;x<TAILLE;x++){
         QString temp;
         for(int y=0;y<TAILLE;y++){
