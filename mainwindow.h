@@ -46,6 +46,7 @@ private:
 
     //Editeur
     QGraphicsRectItem *tableau[TAILLE][TAILLE];
+    QGraphicsEllipseItem *indicDepart[TAILLE];
     QString base[TAILLE][TAILLE];
     short currentSelection;
     QGraphicsRectItem *selection[6];

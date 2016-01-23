@@ -59,6 +59,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
     sceneEditeur=new QGraphicsScene(0,0,geometry().width()-10,geometry().height()-10);
     pen=new QPen(Qt::white,5);
+
+    //Création des modèles
     for(int x=0;x<6;x++){
         selection[x]=new QGraphicsRectItem(0,0,80,80);
         selection[x]->setPos(1100,40+(110*x));
@@ -74,6 +76,15 @@ MainWindow::MainWindow(QWidget *parent) :
 
     for(int x=0;x<6;x++)
         sceneEditeur->addItem(selection[x]);
+
+    //Création des indicateurs de départ
+    for(int x=0;x<TAILLE;x++)
+    {
+        indicDepart[x]=new QGraphicsEllipseItem(0,0,40,40);
+        indicDepart[x]->setPos(250,60+(80*x));
+        indicDepart[x]->setBrush(QBrush(Qt::white));
+        sceneEditeur->addItem(indicDepart[x]);
+    }
 
     for(int x=0;x<TAILLE;x++)
     {
