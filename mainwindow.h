@@ -9,6 +9,9 @@
 #include <QEventLoop>
 #include <QFontDatabase>
 #include <QLabel>
+#include "miroir.h"
+#include "vue.h"
+#include "laser.h"
 
 namespace Ui {
 class MainWindow;
@@ -22,22 +25,26 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
+signals:
+    void touchePressee(int);
+    void toucheRelachee(int);
+    void sourisBougee(QPoint);
+    void sourisCliquee();
+
+private slots:
+    void on_touchePressee(int);
+    void on_toucheRelachee(int);
+    void on_sourisBougee(QPoint);
+    void on_sourisCliquee();
+
 private:
     Ui::MainWindow *ui;
-        VueJeu *jeu;
-        QGraphicsScene *sceneJeu,*sceneMenu;
-        QGraphicsLineItem *ligne;
-        Joueur *joueur1,*joueur2;
-        ParametreJoueur param[2];
-        QGraphicsEllipseItem *balle,*curseur;
-        QPen *pen;
-        QTimer *timerBalle,*timerAnimationJ1,*timerAnimationJ2;
-        bool partieLancee;
-        Animation *anim[2];
-        QLabel *score1,*score2;
-        int movex,movey,mode;
-        QList<int> touchesActives;
-        Bouton *boutonMenu[4];
+    Vue *jeu;
+    QGraphicsScene *sceneJeu,*sceneMenu;
+    QGraphicsEllipseItem *curseur;
+    QPen *pen;
+    QList<int> touchesActives;
+    QRect boutonMenu[4];
 };
 
 #endif // MAINWINDOW_H
