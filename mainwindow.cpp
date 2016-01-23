@@ -82,7 +82,7 @@ MainWindow::MainWindow(QWidget *parent) :
     {
         indicDepart[x]=new QGraphicsRectItem(0,0,80,80);
         indicDepart[x]->setPos(200,cadreEditeur.y()+80*x);
-        indicDepart[x]->setBrush(QBrush(Qt::white));
+        indicDepart[x]->setBrush(QBrush(QPixmap(":/Images/depart.png").scaledToHeight(selection[0]->rect().height())));
         sceneEditeur->addItem(indicDepart[x]);
     }
 
@@ -284,7 +284,7 @@ void MainWindow::on_sourisRelachee()
                 if(verifDepart)
                 {
                     for(int y=0;y<TAILLE;y++)
-                        indicDepart[y]->setBrush(QBrush(Qt::white));
+                        indicDepart[y]->setBrush(QBrush(QPixmap(":/Images/depart.png").scaledToHeight(indicDepart[x]->rect().height())));
                     indicDepart[x]->setBrush(QBrush(QPixmap(":/Images/fighter.png").scaledToHeight(indicDepart[x]->rect().height())));
                     depart=x;
                 }else{
