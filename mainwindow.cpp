@@ -135,6 +135,21 @@ MainWindow::MainWindow(QWidget *parent) :
     boutonNiveaux[0]->setPos(10,(height()/3)*2+10);
     sceneNiveaux->addItem(boutonNiveaux[0]);
 
+    boutonNiveaux[1]=new QGraphicsRectItem(0,0,cadreApercu->pos().x()-50,(height()/3)-20);
+    boutonNiveaux[1]->setBrush(QPixmap(":/Images/Editer fichier.png").scaledToHeight(boutonNiveaux[1]->rect().height()));
+    boutonNiveaux[1]->setPos(width()/2.5,(height()/3)*2+10);
+    sceneNiveaux->addItem(boutonNiveaux[1]);
+
+    boutonNiveaux[2]=new QGraphicsRectItem(0,0,cadreApercu->pos().x()-50,(height()/3)-20);
+    boutonNiveaux[2]->setBrush(QPixmap(":/Images/Supprimer.png").scaledToHeight(boutonNiveaux[2]->rect().height()));
+    boutonNiveaux[2]->setPos(width()/1.7,(height()/3)*2+10);
+    sceneNiveaux->addItem(boutonNiveaux[2]);
+
+    boutonNiveaux[3]=new QGraphicsRectItem(0,0,cadreApercu->pos().x()-50,(height()/3)-20);
+    boutonNiveaux[3]->setBrush(QPixmap(":/Images/Retour.png").scaledToHeight(boutonNiveaux[3]->rect().height()));
+    boutonNiveaux[3]->setPos(width()/1.25,(height()/3)*2+10);
+    sceneNiveaux->addItem(boutonNiveaux[3]);
+
     //Connexion à la base de données
     db = QSqlDatabase::addDatabase("QSQLITE");
     db.setDatabaseName("niveaux.sqlite");
@@ -186,15 +201,21 @@ void MainWindow::on_sourisCliquee(int touche)
 {
     curseur->setBrush(QBrush(QPixmap(":/Images/curseurRouge.png").scaledToHeight(curseur->rect().height())));
     QList<QGraphicsItem*> listeItem;
+    listeItem = curseur->collidingItems();
     if(touche==Qt::LeftButton)
     {
         if(jeu->scene()==sceneMenu){
-            listeItem = curseur->collidingItems();
             if (listeItem.length()>0)
             {
                 if(listeItem.last()==boutonMenu[0])
                 {
                     //Choix du niveau
+                    QSqlQuery query("select * from Niveaux;");
+                    if(query.exec()){
+                        while(query.next()){
+
+                        }
+                    } else qDebug() << "Echec de la requete";
                     sceneNiveaux->addItem(curseur);
                     jeu->setScene(sceneNiveaux);
                 }
@@ -209,7 +230,6 @@ void MainWindow::on_sourisCliquee(int touche)
         }else{
             if(jeu->scene()==sceneEditeur){
                 currentSelection=-1;
-                listeItem = curseur->collidingItems();
                 if (listeItem.length()>0)
                 {
                     bool verifSelection=false;
@@ -241,6 +261,15 @@ void MainWindow::on_sourisCliquee(int touche)
                                 tableau[x][y]->setBrush(QBrush());
                             }
                         }
+                        sceneMenu->addItem(curseur);
+                        jeu->setScene(sceneMenu);
+                    }
+                }
+            }else{
+                if(jeu->scene()==sceneNiveaux){
+                    if(listeItem.last()==boutonNiveaux[3]){
+                        offi.clear();
+                        user.clear();
                         sceneMenu->addItem(curseur);
                         jeu->setScene(sceneMenu);
                     }
