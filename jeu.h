@@ -1,11 +1,26 @@
 #ifndef JEU_H
 #define JEU_H
 
+#include <QGraphicsScene>
+#include <QGraphicsPolygonItem>
 
-class Jeu : public Vue
+//Sens des miroirs
+enum{
+    GH,
+    DH,
+    GB,
+    DB
+};
+
+class Jeu : public QGraphicsScene
 {
 public:
-    Jeu();
+    Jeu(QString levelPath);
+    void creerMiroir(short sens, QGraphicsPolygonItem *poly);
+
+private:
+    QList<QGraphicsPolygonItem*> miroir;
+
 };
 
 #endif // JEU_H

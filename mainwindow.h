@@ -12,14 +12,6 @@
 #include "vue.h"
 #include "laser.h"
 
-//Sens des miroirs
-enum{
-    GH,
-    DH,
-    GB,
-    DB
-};
-
 namespace Ui {
 class MainWindow;
 }
@@ -31,7 +23,6 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
-    void creerMiroir(short sens, QGraphicsPolygonItem *poly);
 
 signals:
     void touchePressee(int);
