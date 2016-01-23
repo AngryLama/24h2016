@@ -315,10 +315,20 @@ void MainWindow::on_DialogAccepted(QString nom)
 {
     qDebug() << nom << endl;
     //Requete pour insérer le niveau
-    /*QSqlQuery query;
+    QSqlQuery query;
     query.prepare("insert into Niveaux (nom, grille0, grille1, grille2, grille3, grille4, grille5, grille6, grille7, off, depart) values (:nom, :grille0, :grille1, :grille2, :grille3, :grille4, :grille5, :grille6, :grille7, :off, :depart);");
-    query.bindValue(":nom, :grille0, :grille1, :grille2, :grille3, :grille4, :grille5, :grille6, :grille7, :off, :depart", nom);
+    query.bindValue(":nom, :grille1, :grille2, :grille3, :grille4, :grille5, :grille6, :grille7, :off, :depart", nom);
+    for(int x=0;x<TAILLE;x++){
+        QString temp;
+        for(int y=0;y<TAILLE;y++){
+            temp+=base[x][y]+";";
+        }
+        temp=temp.left(temp.length()-1);
+        query.bindValue(":grille"+QString::number(x),temp);
+    }
+    query.bindValue(":off",false);
+    query.bindValue(":depart",depart);
     if(query.exec()){
         qDebug() << "Requete réussie";
-    } else qDebug() << "Echec de la requete";*/
+    } else qDebug() << "Echec de la requete";
 }
