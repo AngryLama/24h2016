@@ -36,7 +36,7 @@ MainWindow::MainWindow(QWidget *parent) :
     boutonMenu[1]->setPos(310,450);
     sceneMenu->addItem(boutonMenu[1]);
     curseur=new QGraphicsRectItem(0,0,80,80);
-    curseur->setBrush(QBrush(QPixmap(":/Images/curseurMenu.png",).scaledToHeight(curseur->rect().height())));
+    curseur->setBrush(QBrush(QPixmap(":/Images/curseurMenu.png").scaledToHeight(curseur->rect().height())));
     sceneMenu->addItem(curseur);
 }
 
