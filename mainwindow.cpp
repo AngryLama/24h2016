@@ -307,12 +307,22 @@ void MainWindow::on_sourisCliquee(int touche)
                 if(jeu->scene()==sceneNiveaux){
                     if (listeItem.length()>0)
                     {
+                        //Retour au menu
                         if(listeItem.last()==boutonNiveaux[3]){
                             offi.clear();
                             custom.clear();
+                            for(int x=0;x<TAILLE;x++)
+                            {
+                                for(int y=0;y<TAILLE;y++)
+                                {
+                                    apercu[x][y]->setBrush(QBrush());
+                                }
+                            }
                             sceneMenu->addItem(curseur);
                             jeu->setScene(sceneMenu);
                         }
+
+                        //Apercu des niveaux
                         int memX;
                         bool verifOffi=false;
                         for(int x=0;x<offi.length();x++)
@@ -370,7 +380,7 @@ void MainWindow::on_sourisCliquee(int touche)
                                                 apercu[x][y]->setBrush(QBrush(QPixmap(":/Laser/Mur.png").scaledToHeight(apercu[x][y]->rect().height())));
                                             }
                                             if(temp[y] == "TIE") {
-                                                apercu[x][y]->setBrush(QBrush(QPixmap(":/Laser/chasseur.png").scaledToHeight(apercu[x][y]->rect().height())));
+                                                apercu[x][y]->setBrush(QBrush(QPixmap(":/Images/chasseur.png").scaledToHeight(apercu[x][y]->rect().height())));
                                             }
                                         }
                                     }
