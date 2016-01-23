@@ -17,11 +17,12 @@ void Vue::mouseMoveEvent(QMouseEvent *event)
 
 void Vue::mousePressEvent(QMouseEvent *event)
 {
-    if(event->button()==Qt::LeftButton)
-        emit sourisCliquee();
+    emit sourisCliquee(event->button());
+    event->accept();
 }
 
 void Vue::mouseReleaseEvent(QMouseEvent *event)
 {
-    emit sourisRelachee();
+    if(event->button()==Qt::LeftButton)
+        emit sourisRelachee();
 }

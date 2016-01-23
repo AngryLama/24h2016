@@ -12,7 +12,7 @@ public:
 
 signals:
     void sourisBougee(QPoint);
-    void sourisCliquee();
+    void sourisCliquee(int);
     void sourisRelachee();
 
 public slots:
