@@ -39,7 +39,7 @@ private:
     Ui::MainWindow *ui;
     Vue *jeu;
     QGraphicsScene *sceneNiveaux,*sceneMenu,*sceneJeu,*sceneEditeur;
-    QGraphicsRectItem *curseurMenu,*curseurJeu,*boutonMenu[2];
+    QGraphicsRectItem *curseur,*boutonMenu[2];
     QSqlDatabase db;
 
     //Jeu

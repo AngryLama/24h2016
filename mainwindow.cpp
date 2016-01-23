@@ -36,14 +36,10 @@ MainWindow::MainWindow(QWidget *parent) :
     boutonMenu[1]->setPos(310,450);
     sceneMenu->addItem(boutonMenu[1]);
 
-    //Création du curseur du menu
-    curseurMenu=new QGraphicsRectItem(0,0,80,80);
-    curseurMenu->setBrush(QBrush(QPixmap(":/Images/curseurVert.png").scaledToHeight(curseurMenu->rect().height())));
-    sceneMenu->addItem(curseurMenu);
-
-    //Création du curseur en jeu
-    curseurJeu=new QGraphicsRectItem(0,0,80,80);
-    curseurJeu->setBrush(QBrush(QPixmap(":/Images/curseurVert.png").scaledToHeight(curseurJeu->rect().height())));
+    //Création du curseur
+    curseur=new QGraphicsRectItem(0,0,80,80);
+    curseur->setBrush(QBrush(QPixmap(":/Images/curseurVert.png").scaledToHeight(curseur->rect().height())));
+    sceneMenu->addItem(curseur);
 
     //Création du sélecteur de niveau
     sceneNiveaux=new QGraphicsScene(0,0,geometry().width()-10,geometry().height()-10);
@@ -103,7 +99,7 @@ MainWindow::MainWindow(QWidget *parent) :
     //Création du bouton menu principal
     btnMP = new QGraphicsRectItem(0,0,80,80);
     btnMP->setPos(40,120);
-    btnMP->setBrush(QBrush(QPixmap(":/Images/boutonMP.png").scaledToHeight(80)));
+    btnMP->setBrush(QBrush(QPixmap(":/Images/Retour.png").scaledToHeight(80)));
     sceneEditeur->addItem(btnMP);
 
     //Connexion à la base de données
@@ -132,9 +128,9 @@ MainWindow::~MainWindow()
 void MainWindow::on_sourisBougee(QPoint position)
 {
     if(jeu->scene()==sceneMenu){
-        curseurMenu->setPos(position);
+        curseur->setPos(position);
         //Verification de la collision
-        QList<QGraphicsItem*> listeItem = curseurMenu->collidingItems();
+        QList<QGraphicsItem*> listeItem = curseur->collidingItems();
         if (listeItem.length()>0)
         {
             if (listeItem.last()==boutonMenu[0]) //Si il y a collision avec Jouer, alors on charge l'image hover
@@ -148,24 +144,18 @@ void MainWindow::on_sourisBougee(QPoint position)
     }
     if(jeu->scene()==sceneEditeur || jeu->scene()==sceneJeu)
     {
-        curseurJeu->setPos(position);
-        QList<QGraphicsItem*> listeItem = curseurJeu->collidingItems();
-        if (listeItem.length()>0){
-            if (listeItem.last() == btnMP)
-                btnMP->setBrush(QBrush(QPixmap(":/Images/boutonMP_ON.png").scaledToHeight(80)));
-            else btnMP->setBrush(QBrush(QPixmap(":/Images/boutonMP.png").scaledToHeight(80)));
-        }
+        curseur->setPos(position);
     }
 }
 
 void MainWindow::on_sourisCliquee(int touche)
 {
-    curseurMenu->setBrush(QBrush(QPixmap(":/Images/curseurRouge.png").scaledToHeight(curseurMenu->rect().height())));
+    curseur->setBrush(QBrush(QPixmap(":/Images/curseurRouge.png").scaledToHeight(curseur->rect().height())));
     QList<QGraphicsItem*> listeItem;
     if(touche==Qt::LeftButton)
     {
         if(jeu->scene()==sceneMenu){
-            listeItem = curseurMenu->collidingItems();
+            listeItem = curseur->collidingItems();
             if (listeItem.length()>0)
             {
                 if(listeItem.last()==boutonMenu[0])
@@ -182,7 +172,7 @@ void MainWindow::on_sourisCliquee(int touche)
                 if(listeItem.last()==boutonMenu[1])
                 {
                     //Lancer l'éditeur
-                    sceneEditeur->addItem(curseurJeu);
+                    sceneEditeur->addItem(curseur);
                     currentSelection=-1;
                     jeu->setScene(sceneEditeur);
                 }
@@ -190,7 +180,7 @@ void MainWindow::on_sourisCliquee(int touche)
         }else{
             if(jeu->scene()==sceneEditeur){
                 currentSelection=-1;
-                listeItem = curseurJeu->collidingItems();
+                listeItem = curseur->collidingItems();
                 if (listeItem.length()>0)
                 {
                     bool verifSelection=false;
@@ -201,7 +191,7 @@ void MainWindow::on_sourisCliquee(int touche)
                         }
                     }
                     if(verifSelection){
-                        curseurJeu->setBrush(selection[currentSelection]->brush());
+                        curseur->setBrush(selection[currentSelection]->brush());
                     }
                     if(listeItem.last() == btnSave){
                         //IHM pour demander le nom
@@ -212,7 +202,17 @@ void MainWindow::on_sourisCliquee(int touche)
                     }
                     if(listeItem.last() == btnMP){
                         //Retour au menu principal
-                        sceneEditeur->clear();
+                        for(int y=0;y<TAILLE;y++)
+                            indicDepart[y]->setBrush(QBrush(QPixmap(":/Images/depart.png").scaledToHeight(indicDepart[y]->rect().height())));
+                        for(int x=0;x<TAILLE;x++)
+                        {
+                            for(int y=0;y<TAILLE;y++)
+                            {
+                                base[x][y].clear();
+                                tableau[x][y]->setBrush(QBrush());
+                            }
+                        }
+                        sceneMenu->addItem(curseur);
                         jeu->setScene(sceneMenu);
                     }
                 }
@@ -223,11 +223,11 @@ void MainWindow::on_sourisCliquee(int touche)
     {
         if(jeu->scene()==sceneEditeur)
         {
-            listeItem = curseurJeu->collidingItems();
+            listeItem = curseur->collidingItems();
             if (listeItem.length()>0)
             {
                 QList<QGraphicsItem*> listeItem;
-                listeItem = curseurJeu->collidingItems();
+                listeItem = curseur->collidingItems();
                 if (listeItem.length()>0)
                 {
                     bool verifTableau=false;
@@ -256,11 +256,11 @@ void MainWindow::on_sourisCliquee(int touche)
 
 void MainWindow::on_sourisRelachee()
 {
-    curseurMenu->setBrush(QBrush(QPixmap(":/Images/curseurVert.png").scaledToHeight(curseurMenu->rect().height())));
+    curseur->setBrush(QBrush(QPixmap(":/Images/curseurVert.png").scaledToHeight(curseur->rect().height())));
     if(jeu->scene()==sceneEditeur)
     {
         QList<QGraphicsItem*> listeItem;
-        listeItem = curseurJeu->collidingItems();
+        listeItem = curseur->collidingItems();
         if (listeItem.length()>0)
         {
             bool verifTableau=false;
@@ -279,8 +279,8 @@ void MainWindow::on_sourisRelachee()
             }
             if(verifTableau && currentSelection!=-1)
             {
-                tableau[cx][cy]->setBrush(curseurJeu->brush());
-                curseurJeu->setBrush(QBrush(QPixmap(":/Images/curseurVert.png").scaledToHeight(curseurJeu->rect().height())));
+                tableau[cx][cy]->setBrush(selection[currentSelection]->brush());
+                curseur->setBrush(QBrush(QPixmap(":/Images/curseurVert.png").scaledToHeight(curseur->rect().height())));
                 switch (currentSelection) {
                 case 0:
                     base[cx][cy]="GH";
@@ -321,7 +321,7 @@ void MainWindow::on_sourisRelachee()
                     depart=cx;
                 }else{
                     currentSelection=-1;
-                    curseurJeu->setBrush(QBrush(QPixmap(":/Images/curseurVert.png").scaledToHeight(curseurJeu->rect().height())));
+                    curseur->setBrush(QBrush(QPixmap(":/Images/curseurVert.png").scaledToHeight(curseur->rect().height())));
                 }
             }
         }
