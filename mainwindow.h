@@ -43,11 +43,11 @@ private:
     QSqlDatabase db;
 
     //Jeu
-    QGraphicsRectItem *cadreJeu, *cases[TAILLE][TAILLE];
-    QString pattern[TAILLE][TAILLE];
+    QGraphicsRectItem *cadreJeu, *cases[TAILLE][TAILLE], *selectionJeu[4];
+    QString pattern[TAILLE][TAILLE],currentPattern[TAILLE][TAILLE];
 
     //Editeur
-    QGraphicsRectItem *tableau[TAILLE][TAILLE], *indicDepart[TAILLE], *selection[6], *btnSave, *btnMP;
+    QGraphicsRectItem *tableau[TAILLE][TAILLE], *indicDepart[TAILLE], *selectionEditeur[6], *btnSave, *btnMP;
     QString base[TAILLE][TAILLE];
     short currentSelectionEditeur,depart;
     QPen *pen;

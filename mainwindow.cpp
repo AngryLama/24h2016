@@ -7,6 +7,7 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     QRect cadre(320,40,640,640);
+    pen=new QPen(Qt::white,5);
 
     //Importation de la police d'ecriture
     QFontDatabase::addApplicationFont(":/Spyv3l.ttf"); //Spylord Laser
@@ -48,40 +49,54 @@ MainWindow::MainWindow(QWidget *parent) :
     //Création du jeu
     sceneJeu=new QGraphicsScene(0,0,geometry().width()-10,geometry().height()-10);
 
-    /*cadreJeu=new QGraphicsRectItem(0,0,640,640);
+    cadreJeu=new QGraphicsRectItem(0,0,640,640);
     cadreJeu->setPen(*pen);
     cadreJeu->setPos(cadre.x(),cadre.y());
-    sceneJeu->addItem(cadreJeu);*/
+    sceneJeu->addItem(cadreJeu);
+
+    for(int x=0;x<4;x++){
+        selectionJeu[x]=new QGraphicsRectItem(0,0,80,80);
+        selectionJeu[x]->setPos(1000,40+(110*x));
+        selectionJeu[x]->setPen(*pen);
+    }
+
+    selectionJeu[0]->setBrush(QBrush(QPixmap(":/Laser/Miroir GH.png").scaledToHeight(selectionJeu[0]->rect().height())));
+    selectionJeu[1]->setBrush(QBrush(QPixmap(":/Laser/Miroir DH.png").scaledToHeight(selectionJeu[0]->rect().height())));
+    selectionJeu[2]->setBrush(QBrush(QPixmap(":/Laser/Miroir GB.png").scaledToHeight(selectionJeu[0]->rect().height())));
+    selectionJeu[3]->setBrush(QBrush(QPixmap(":/Laser/Miroir DB.png").scaledToHeight(selectionJeu[0]->rect().height())));
+
+    for(int x=0;x<4;x++){
+        sceneJeu->addItem(selectionJeu[x]);
+    }
 
     //Création de l'éditeur
     isModification=false;
 
     sceneEditeur=new QGraphicsScene(0,0,geometry().width()-10,geometry().height()-10);
-    pen=new QPen(Qt::white,5);
 
     //Création des modèles
     for(int x=0;x<6;x++){
-        selection[x]=new QGraphicsRectItem(0,0,80,80);
-        selection[x]->setPos(1100,40+(110*x));
-        selection[x]->setPen(*pen);
+        selectionEditeur[x]=new QGraphicsRectItem(0,0,80,80);
+        selectionEditeur[x]->setPos(1100,40+(110*x));
+        selectionEditeur[x]->setPen(*pen);
     }
 
-    selection[0]->setBrush(QBrush(QPixmap(":/Laser/Miroir GH.png").scaledToHeight(selection[0]->rect().height())));
-    selection[1]->setBrush(QBrush(QPixmap(":/Laser/Miroir DH.png").scaledToHeight(selection[0]->rect().height())));
-    selection[2]->setBrush(QBrush(QPixmap(":/Laser/Miroir GB.png").scaledToHeight(selection[0]->rect().height())));
-    selection[3]->setBrush(QBrush(QPixmap(":/Laser/Miroir DB.png").scaledToHeight(selection[0]->rect().height())));
-    selection[4]->setBrush(QBrush(QPixmap(":/Laser/Mur.png").scaledToHeight(selection[0]->rect().height())));
-    selection[5]->setBrush(QBrush(QPixmap(":/Images/chasseur.png").scaledToHeight(selection[0]->rect().height())));
+    selectionEditeur[0]->setBrush(QBrush(QPixmap(":/Laser/Miroir GH.png").scaledToHeight(selectionEditeur[0]->rect().height())));
+    selectionEditeur[1]->setBrush(QBrush(QPixmap(":/Laser/Miroir DH.png").scaledToHeight(selectionEditeur[0]->rect().height())));
+    selectionEditeur[2]->setBrush(QBrush(QPixmap(":/Laser/Miroir GB.png").scaledToHeight(selectionEditeur[0]->rect().height())));
+    selectionEditeur[3]->setBrush(QBrush(QPixmap(":/Laser/Miroir DB.png").scaledToHeight(selectionEditeur[0]->rect().height())));
+    selectionEditeur[4]->setBrush(QBrush(QPixmap(":/Laser/Mur.png").scaledToHeight(selectionEditeur[0]->rect().height())));
+    selectionEditeur[5]->setBrush(QBrush(QPixmap(":/Images/chasseur.png").scaledToHeight(selectionEditeur[0]->rect().height())));
 
     for(int x=0;x<6;x++)
-        sceneEditeur->addItem(selection[x]);
+        sceneEditeur->addItem(selectionEditeur[x]);
 
     //Création des indicateurs de départ
     for(int x=0;x<TAILLE;x++)
     {
         indicDepart[x]=new QGraphicsRectItem(0,0,80,80);
         indicDepart[x]->setPos(200,cadre.y()+80*x);
-        indicDepart[x]->setBrush(QBrush(QPixmap(":/Images/depart.png").scaledToHeight(selection[0]->rect().height())));
+        indicDepart[x]->setBrush(QBrush(QPixmap(":/Images/depart.png").scaledToHeight(selectionEditeur[0]->rect().height())));
         sceneEditeur->addItem(indicDepart[x]);
     }
 
@@ -149,17 +164,14 @@ MainWindow::MainWindow(QWidget *parent) :
     boutonNiveaux[0]=new QGraphicsRectItem(0,0,cadreApercu->pos().x()-50,(height()/3)-20);
     boutonNiveaux[0]->setBrush(QPixmap(":/Images/Play.png").scaledToHeight(boutonNiveaux[0]->rect().height()));
     boutonNiveaux[0]->setPos(10,(height()/3)*2+10);
-    sceneNiveaux->addItem(boutonNiveaux[0]);
 
     boutonNiveaux[1]=new QGraphicsRectItem(0,0,cadreApercu->pos().x()-50,(height()/3)-20);
     boutonNiveaux[1]->setBrush(QPixmap(":/Images/Editer fichier.png").scaledToHeight(boutonNiveaux[1]->rect().height()));
     boutonNiveaux[1]->setPos(width()/2.5,(height()/3)*2+10);
-    sceneNiveaux->addItem(boutonNiveaux[1]);
 
     boutonNiveaux[2]=new QGraphicsRectItem(0,0,cadreApercu->pos().x()-50,(height()/3)-20);
     boutonNiveaux[2]->setBrush(QPixmap(":/Images/Supprimer.png").scaledToHeight(boutonNiveaux[2]->rect().height()));
     boutonNiveaux[2]->setPos(width()/1.7,(height()/3)*2+10);
-    sceneNiveaux->addItem(boutonNiveaux[2]);
 
     boutonNiveaux[3]=new QGraphicsRectItem(0,0,cadreApercu->pos().x()-50,(height()/3)-20);
     boutonNiveaux[3]->setBrush(QPixmap(":/Images/Retour.png").scaledToHeight(boutonNiveaux[3]->rect().height()));
@@ -278,13 +290,13 @@ void MainWindow::on_sourisCliquee(int touche)
                 {
                     bool verifSelection=false;
                     for(int x=0;x<6;x++){
-                        if(listeItem.last()==selection[x]){
+                        if(listeItem.last()==selectionEditeur[x]){
                             verifSelection=true;
                             currentSelectionEditeur=x;
                         }
                     }
                     if(verifSelection){
-                        curseur->setBrush(selection[currentSelectionEditeur]->brush());
+                        curseur->setBrush(selectionEditeur[currentSelectionEditeur]->brush());
                     }
                     if(listeItem.last() == btnSave){
                         if(!isModification)
@@ -319,8 +331,10 @@ void MainWindow::on_sourisCliquee(int touche)
                 if(jeu->scene()==sceneNiveaux){
                     if (listeItem.length()>0)
                     {
+                        //Lance la partie
                         if(listeItem.last()==boutonNiveaux[0]){
-
+                            sceneJeu->addItem(curseur);
+                            jeu->setScene(sceneJeu);
                         }else{
                             //Retour au menu
                             if(listeItem.last()==boutonNiveaux[3]){
@@ -421,6 +435,7 @@ void MainWindow::on_sourisCliquee(int touche)
                                                     apercu[x][y]->setBrush(QBrush());
                                                 }
                                             }
+                                            sceneNiveaux->addItem(boutonNiveaux[0]);
                                         }
                                         //Apercu des niveaux
                                         int memX;
@@ -563,7 +578,7 @@ void MainWindow::on_sourisRelachee()
             }
             if(verifTableau && currentSelectionEditeur!=-1)
             {
-                tableau[cx][cy]->setBrush(selection[currentSelectionEditeur]->brush());
+                tableau[cx][cy]->setBrush(selectionEditeur[currentSelectionEditeur]->brush());
                 curseur->setBrush(QBrush(QPixmap(":/Images/curseurVert.png").scaledToHeight(curseur->rect().height())));
                 switch (currentSelectionEditeur) {
                 case 0:
