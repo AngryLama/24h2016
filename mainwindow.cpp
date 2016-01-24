@@ -38,6 +38,19 @@ MainWindow::MainWindow(QWidget *parent) :
     boutonMenu[1]->setPos(310,450);
     sceneMenu->addItem(boutonMenu[1]);
 
+    //Création de scene gagne
+    sceneGagne=new QGraphicsScene(0,0,geometry().width()-10,geometry().height()-10);
+
+    texteGagne=new QGraphicsTextItem("GAGNE");
+    texteGagne->setDefaultTextColor(QColor(Qt::white));
+    texteGagne->setPos(width()/4,height()/2);
+    texteGagne->setFont(QFont("Spylord Laser",250));
+    sceneGagne->addItem(texteGagne);
+
+    retourMenuGagne=new QGraphicsRectItem(0,0,120,120);
+    retourMenuGagne->setBrush(QBrush(QPixmap(":/Images/Retour.png").scaledToHeight(retourMenuGagne->rect().height())));
+    retourMenuGagne->setPos(width()-retourMenuGagne->rect().width()-50,height()-retourMenuGagne->rect().height()-50);
+
     //Création du curseur
     curseur=new QGraphicsRectItem(0,0,80,80);
     curseur->setBrush(QBrush(QPixmap(":/Images/curseurVert.png").scaledToHeight(curseur->rect().height())));
@@ -65,9 +78,19 @@ MainWindow::MainWindow(QWidget *parent) :
     selectionJeu[2]->setBrush(QBrush(QPixmap(":/Laser/Miroir GB.png").scaledToHeight(selectionJeu[0]->rect().height())));
     selectionJeu[3]->setBrush(QBrush(QPixmap(":/Laser/Miroir DB.png").scaledToHeight(selectionJeu[0]->rect().height())));
 
+    QPalette palette;
+    QLabel *temp=new QLabel(this);
+    palette.setColor(temp->backgroundRole(), Qt::white);
+    palette.setColor(temp->foregroundRole(), Qt::white);
     for(int x=0;x<4;x++){
+        affNbSelection[x]=new QLabel(QString::number(0),this);
+        affNbSelection[x]->setFont(QFont("",40));
+        affNbSelection[x]->setPalette(palette);
+        affNbSelection[x]->setGeometry(selectionJeu[x]->pos().x()+selectionJeu[x]->rect().width()+50,selectionJeu[x]->pos().y(),80,80);
+        affNbSelection[x]->hide();
         sceneJeu->addItem(selectionJeu[x]);
     }
+    delete temp;
 
     for(int x=0;x<TAILLE;x++)
     {
@@ -85,6 +108,7 @@ MainWindow::MainWindow(QWidget *parent) :
         departJeu[x]->setPos(200,cadre.y()+80*x);
         sceneJeu->addItem(departJeu[x]);
     }
+
 
     //Création de l'éditeur
     isModification=false;
@@ -350,6 +374,17 @@ void MainWindow::on_sourisCliquee(int touche)
                     {
                         //Lance la partie
                         if(listeItem.last()==boutonNiveaux[0]){
+                            for(int x=0;x<TAILLE;x++)
+                            {
+                                for(int y=0;y<TAILLE;y++)
+                                {
+                                    currentPattern[x][y].clear();
+                                }
+                            }
+                            for(int x=0;x<4;x++)
+                            {
+                                affNbSelection[x]->show();
+                            }
                             sceneJeu->addItem(curseur);
                             jeu->setScene(sceneJeu);
                         }else{
@@ -444,6 +479,7 @@ void MainWindow::on_sourisCliquee(int touche)
                                         currentSelectionEditeur=-1;
                                         jeu->setScene(sceneEditeur);
                                     }else{
+                                        //Item dynamique
                                         if(listeItem.last()!=boutonNiveaux[0] && listeItem.last()!=boutonNiveaux[1] && listeItem.last()!=boutonNiveaux[2] && listeItem.last()!=ligne[0] && listeItem.last()!=ligne[1] && listeItem.last()!=titre[0] && listeItem.last()!=titre[1]){
                                             for(int x=0;x<TAILLE;x++)
                                             {
@@ -451,6 +487,10 @@ void MainWindow::on_sourisCliquee(int touche)
                                                 {
                                                     apercu[x][y]->setBrush(QBrush());
                                                 }
+                                            }
+                                            for(int x=0;x<4;x++)
+                                            {
+                                                affNbSelection[x]->setText(QString::number(0));
                                             }
                                             sceneNiveaux->addItem(boutonNiveaux[0]);
                                         }
@@ -501,16 +541,21 @@ void MainWindow::on_sourisCliquee(int touche)
                                                     {
                                                         QStringList temp=query.value(x).toString().split(";");
                                                         for(int y=0; y<TAILLE; y++){
+                                                            pattern[x][y]=temp[y];
                                                             if(temp[y] == "GH") {
+                                                                affNbSelection[0]->setText(QString::number(affNbSelection[0]->text().toInt()+1));
                                                                 apercu[x][y]->setBrush(QBrush(QPixmap(":/Laser/Miroir GH.png").scaledToHeight(apercu[x][y]->rect().height())));
                                                             }
                                                             if(temp[y] == "DH") {
+                                                                affNbSelection[1]->setText(QString::number(affNbSelection[1]->text().toInt()+1));
                                                                 apercu[x][y]->setBrush(QBrush(QPixmap(":/Laser/Miroir DH.png").scaledToHeight(apercu[x][y]->rect().height())));
                                                             }
                                                             if(temp[y] == "GB") {
+                                                                affNbSelection[2]->setText(QString::number(affNbSelection[2]->text().toInt()+1));
                                                                 apercu[x][y]->setBrush(QBrush(QPixmap(":/Laser/Miroir GB.png").scaledToHeight(apercu[x][y]->rect().height())));
                                                             }
                                                             if(temp[y] =="DB") {
+                                                                affNbSelection[3]->setText(QString::number(affNbSelection[3]->text().toInt()+1));
                                                                 apercu[x][y]->setBrush(QBrush(QPixmap(":/Laser/Miroir DB.png").scaledToHeight(apercu[x][y]->rect().height())));
                                                             }
                                                             if(temp[y] =="M") {
@@ -525,6 +570,35 @@ void MainWindow::on_sourisCliquee(int touche)
                                             }
                                         }
                                     }
+                                }
+                            }
+                        }
+                    }
+                }else{
+                    if(jeu->scene()==sceneJeu)
+                    {
+                        if(listeItem.length()>0)
+                        {
+                            bool verifSelection=false;
+                            for(int x=0;x<4;x++){
+                                if(listeItem.last()==selectionJeu[x]){
+                                    verifSelection=true;
+                                    currentSelectionJeu=x;
+                                }
+                            }
+                            if(verifSelection){
+                                curseur->setBrush(selectionEditeur[currentSelectionJeu]->brush());
+                            }
+                        }
+                    }else{
+                        if(jeu->scene()==sceneGagne)
+                        {
+                            if(listeItem.length()>0)
+                            {
+                                if(listeItem.last()==retourMenuGagne)
+                                {
+                                    sceneMenu->addItem(curseur);
+                                    jeu->setScene(sceneMenu);
                                 }
                             }
                         }
@@ -638,6 +712,69 @@ void MainWindow::on_sourisRelachee()
                 }else{
                     currentSelectionEditeur=-1;
                     curseur->setBrush(QBrush(QPixmap(":/Images/curseurVert.png").scaledToHeight(curseur->rect().height())));
+                }
+            }
+        }
+    }else{
+        if(jeu->scene()==sceneJeu)
+        {
+            QList<QGraphicsItem*> listeItem;
+            listeItem = curseur->collidingItems();
+            listeItem.removeOne(cadreJeu);
+            if (listeItem.length()>0)
+            {
+                bool verifTableau=false;
+                int cx,cy;
+                for(int x=0;x<TAILLE;x++)
+                {
+                    for(int y=0;y<TAILLE;y++)
+                    {
+                        if(listeItem.last()==tableauJeu[x][y])
+                        {
+                            verifTableau=true;
+                            cx=x;
+                            cy=y;
+                        }
+                    }
+                }
+                if(verifTableau && currentSelectionJeu!=-1)
+                {
+                    curseur->setBrush(QBrush(QPixmap(":/Images/curseurVert.png").scaledToHeight(curseur->rect().height())));
+                    if((affNbSelection[currentSelectionJeu]->text().toInt()-1)>-1)
+                    {
+                        tableauJeu[cx][cy]->setBrush(selectionJeu[currentSelectionJeu]->brush());
+                        affNbSelection[currentSelectionJeu]->setText(QString::number(affNbSelection[currentSelectionJeu]->text().toInt()-1));
+                        switch (currentSelectionJeu) {
+                        case 0:
+                            currentPattern[cx][cy]="GH";
+                            break;
+                        case 1:
+                            currentPattern[cx][cy]="DH";
+                            break;
+                        case 2:
+                            currentPattern[cx][cy]="GB";
+                            break;
+                        case 3:
+                            currentPattern[cx][cy]="DB";
+                            break;
+                        default:
+                            break;
+                        }
+                        bool verifGagne=true;
+                        for(int x=0;x<TAILLE;x++)
+                        {
+                            for(int y=0;y<TAILLE;y++)
+                            {
+                                if(pattern[x][y]!=currentPattern[x][y])
+                                    verifGagne=false;
+                            }
+                        }
+                        if(verifGagne)
+                        {
+                            sceneGagne->addItem(curseur);
+                            jeu->setScene(sceneGagne);
+                        }
+                    }
                 }
             }
         }

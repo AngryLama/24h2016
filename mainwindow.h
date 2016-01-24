@@ -38,13 +38,15 @@ private slots:
 private:
     Ui::MainWindow *ui;
     Vue *jeu;
-    QGraphicsScene *sceneNiveaux,*sceneMenu,*sceneJeu,*sceneEditeur;
+    QGraphicsScene *sceneNiveaux,*sceneMenu,*sceneJeu,*sceneEditeur,*sceneGagne;
     QGraphicsRectItem *curseur,*boutonMenu[2];
     QSqlDatabase db;
 
     //Jeu
     QGraphicsRectItem *cadreJeu, *tableauJeu[TAILLE][TAILLE],*departJeu[TAILLE], *selectionJeu[4];
     QString pattern[TAILLE][TAILLE],currentPattern[TAILLE][TAILLE];
+    QLabel *affNbSelection[4];
+    short currentSelectionJeu;
 
     //Editeur
     QGraphicsRectItem *tableauEditeur[TAILLE][TAILLE], *indicDepart[TAILLE], *selectionEditeur[6], *btnSave, *btnMP;
@@ -61,6 +63,10 @@ private:
     short currentSelectionNiveaux;
     bool isOffiSelectionNiveaux,isModification;
     QString tempModif;
+
+    //Gagne
+    QGraphicsTextItem *texteGagne;
+    QGraphicsRectItem *retourMenuGagne;
 };
 
 #endif // MAINWINDOW_H
