@@ -28,5 +28,7 @@
         <file>Images/Play.png</file>
         <file>Images/Supprimer.png</file>
         <file>Laser Rod.ttf</file>
+        <file>Images/Droite.png</file>
+        <file>Images/Gauche.png</file>
     </qresource>
 </RCC>

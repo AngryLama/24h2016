@@ -44,7 +44,7 @@ MainWindow::MainWindow(QWidget *parent) :
     texteGagne=new QGraphicsTextItem("GAGNE");
     texteGagne->setDefaultTextColor(QColor(Qt::white));
     texteGagne->setPos(width()/6,height()/7);
-    texteGagne->setFont(QFont("Laser Rod",150));
+    texteGagne->setFont(QFont("Laser Rod",250));
     sceneGagne->addItem(texteGagne);
 
     retourMenuGagne=new QGraphicsRectItem(0,0,120,120);

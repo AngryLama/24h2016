@@ -66,7 +66,7 @@ private:
 
     //Selecteur de niveaux
     QGraphicsTextItem *titre[2];
-    QGraphicsRectItem *zone[2],*boutonNiveaux[4],*apercu[TAILLE][TAILLE],*cadreApercu;
+    QGraphicsRectItem *zone[2],*boutonNiveaux[4],*apercu[TAILLE][TAILLE],*cadreApercu,*boutonScroll[4];
     QList<QGraphicsTextItem*> offi,custom;
     QGraphicsLineItem *ligne[2];
     short currentSelectionNiveaux;
