@@ -44,6 +44,7 @@ private:
 
     //Jeu
     QGraphicsRectItem *cadreJeu, *cases[TAILLE][TAILLE];
+    QString pattern[TAILLE][TAILLE];
 
     //Editeur
     QGraphicsRectItem *tableau[TAILLE][TAILLE], *indicDepart[TAILLE], *selection[6], *btnSave, *btnMP;
@@ -58,7 +59,8 @@ private:
     QList<QGraphicsTextItem*> offi,custom;
     QGraphicsLineItem *ligne[2];
     short currentSelectionNiveaux;
-    bool isOffiSelectionNiveaux;
+    bool isOffiSelectionNiveaux,isModification;
+    QString tempModif;
 };
 
 #endif // MAINWINDOW_H
