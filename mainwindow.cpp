@@ -693,6 +693,8 @@ void MainWindow::on_sourisCliquee(int touche)
                                                         if(scrollCustom<custom.length()/5)
                                                             affichageNiveaux(scrollCustom+1,CUSTOM);
                                                     }else{
+                                                        for(int x=0;x<4;x++)
+                                                            listeItem.removeOne(boutonScroll[x]);
                                                         //Item dynamique
                                                         if(listeItem.last()!=boutonNiveaux[0] && listeItem.last()!=boutonNiveaux[1] && listeItem.last()!=boutonNiveaux[2] && listeItem.last()!=ligne[0] && listeItem.last()!=ligne[1] && listeItem.last()!=titre[0] && listeItem.last()!=titre[1]){
                                                             for(int x=0;x<TAILLE;x++)
