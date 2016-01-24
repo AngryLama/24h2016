@@ -69,6 +69,23 @@ MainWindow::MainWindow(QWidget *parent) :
         sceneJeu->addItem(selectionJeu[x]);
     }
 
+    for(int x=0;x<TAILLE;x++)
+    {
+        for(int y=0;y<TAILLE;y++)
+        {
+            tableauJeu[x][y]=new QGraphicsRectItem(0,0,80,80);
+            tableauJeu[x][y]->setPos(cadre.x()+80*x,cadre.y()+80*y);
+            sceneJeu->addItem(tableauJeu[x][y]);
+        }
+    }
+
+    for(int x=0;x<TAILLE;x++)
+    {
+        departJeu[x]=new QGraphicsRectItem(0,0,80,80);
+        departJeu[x]->setPos(200,cadre.y()+80*x);
+        sceneJeu->addItem(departJeu[x]);
+    }
+
     //Création de l'éditeur
     isModification=false;
 
@@ -104,10 +121,10 @@ MainWindow::MainWindow(QWidget *parent) :
     {
         for(int y=0;y<TAILLE;y++)
         {
-            tableau[x][y]=new QGraphicsRectItem(0,0,80,80);
-            tableau[x][y]->setPos(cadre.x()+80*x,cadre.y()+80*y);
-            tableau[x][y]->setPen(*pen);
-            sceneEditeur->addItem(tableau[x][y]);
+            tableauEditeur[x][y]=new QGraphicsRectItem(0,0,80,80);
+            tableauEditeur[x][y]->setPos(cadre.x()+80*x,cadre.y()+80*y);
+            tableauEditeur[x][y]->setPen(*pen);
+            sceneEditeur->addItem(tableauEditeur[x][y]);
         }
     }
 
@@ -320,7 +337,7 @@ void MainWindow::on_sourisCliquee(int touche)
                             for(int y=0;y<TAILLE;y++)
                             {
                                 base[x][y].clear();
-                                tableau[x][y]->setBrush(QBrush());
+                                tableauEditeur[x][y]->setBrush(QBrush());
                             }
                         }
                         sceneMenu->addItem(curseur);
@@ -395,30 +412,30 @@ void MainWindow::on_sourisCliquee(int touche)
                                         {
                                             for(int y=0;y<TAILLE;y++)
                                             {
-                                                tableau[x][y]->setBrush(QBrush());
+                                                tableauEditeur[x][y]->setBrush(QBrush());
                                                 if(apercu[x][y]->brush().texture().toImage() == QPixmap(":/Laser/Miroir GH.png").scaledToHeight(apercu[x][y]->rect().height()).toImage()) {
                                                     base[x][y]="GH";
-                                                    tableau[x][y]->setBrush(QBrush(QPixmap(":/Laser/Miroir GH.png").scaledToHeight(tableau[x][y]->rect().height())));
+                                                    tableauEditeur[x][y]->setBrush(QBrush(QPixmap(":/Laser/Miroir GH.png").scaledToHeight(tableauEditeur[x][y]->rect().height())));
                                                 }
                                                 if(apercu[x][y]->brush().texture().toImage() == QPixmap(":/Laser/Miroir DH.png").scaledToHeight(apercu[x][y]->rect().height()).toImage()) {
                                                     base[x][y]="DH";
-                                                    tableau[x][y]->setBrush(QBrush(QPixmap(":/Laser/Miroir DH.png").scaledToHeight(tableau[x][y]->rect().height())));
+                                                    tableauEditeur[x][y]->setBrush(QBrush(QPixmap(":/Laser/Miroir DH.png").scaledToHeight(tableauEditeur[x][y]->rect().height())));
                                                 }
                                                 if(apercu[x][y]->brush().texture().toImage() == QPixmap(":/Laser/Miroir GB.png").scaledToHeight(apercu[x][y]->rect().height()).toImage()) {
                                                     base[x][y]="GB";
-                                                    tableau[x][y]->setBrush(QBrush(QPixmap(":/Laser/Miroir GB.png").scaledToHeight(tableau[x][y]->rect().height())));
+                                                    tableauEditeur[x][y]->setBrush(QBrush(QPixmap(":/Laser/Miroir GB.png").scaledToHeight(tableauEditeur[x][y]->rect().height())));
                                                 }
                                                 if(apercu[x][y]->brush().texture().toImage() == QPixmap(":/Laser/Miroir DB.png").scaledToHeight(apercu[x][y]->rect().height()).toImage()) {
                                                     base[x][y]="DB";
-                                                    tableau[x][y]->setBrush(QBrush(QPixmap(":/Laser/Miroir DB.png").scaledToHeight(tableau[x][y]->rect().height())));
+                                                    tableauEditeur[x][y]->setBrush(QBrush(QPixmap(":/Laser/Miroir DB.png").scaledToHeight(tableauEditeur[x][y]->rect().height())));
                                                 }
                                                 if(apercu[x][y]->brush().texture().toImage() == QPixmap(":/Laser/Mur.png").scaledToHeight(apercu[x][y]->rect().height()).toImage()) {
                                                     base[x][y]="M";
-                                                    tableau[x][y]->setBrush(QBrush(QPixmap(":/Laser/Mur.png").scaledToHeight(tableau[x][y]->rect().height())));
+                                                    tableauEditeur[x][y]->setBrush(QBrush(QPixmap(":/Laser/Mur.png").scaledToHeight(tableauEditeur[x][y]->rect().height())));
                                                 }
                                                 if(apercu[x][y]->brush().texture().toImage() == QPixmap(":/Images/chasseur.png").scaledToHeight(apercu[x][y]->rect().height()).toImage()) {
                                                     base[x][y]="TIE";
-                                                    tableau[x][y]->setBrush(QBrush(QPixmap(":/Images/chasseur.png").scaledToHeight(tableau[x][y]->rect().height())));
+                                                    tableauEditeur[x][y]->setBrush(QBrush(QPixmap(":/Images/chasseur.png").scaledToHeight(tableauEditeur[x][y]->rect().height())));
                                                 }
                                                 apercu[x][y]->setBrush(QBrush());
                                             }
@@ -534,7 +551,7 @@ void MainWindow::on_sourisCliquee(int touche)
                     {
                         for(int y=0;y<TAILLE;y++)
                         {
-                            if(listeItem.last()==tableau[x][y])
+                            if(listeItem.last()==tableauEditeur[x][y])
                             {
                                 verifTableau=true;
                                 cx=x;
@@ -545,7 +562,7 @@ void MainWindow::on_sourisCliquee(int touche)
                     if(verifTableau)
                     {
                         base[cx][cy].clear();
-                        tableau[cx][cy]->setBrush(QBrush());
+                        tableauEditeur[cx][cy]->setBrush(QBrush());
                     }
                 }
             }
@@ -568,7 +585,7 @@ void MainWindow::on_sourisRelachee()
             {
                 for(int y=0;y<TAILLE;y++)
                 {
-                    if(listeItem.last()==tableau[x][y])
+                    if(listeItem.last()==tableauEditeur[x][y])
                     {
                         verifTableau=true;
                         cx=x;
@@ -578,7 +595,7 @@ void MainWindow::on_sourisRelachee()
             }
             if(verifTableau && currentSelectionEditeur!=-1)
             {
-                tableau[cx][cy]->setBrush(selectionEditeur[currentSelectionEditeur]->brush());
+                tableauEditeur[cx][cy]->setBrush(selectionEditeur[currentSelectionEditeur]->brush());
                 curseur->setBrush(QBrush(QPixmap(":/Images/curseurVert.png").scaledToHeight(curseur->rect().height())));
                 switch (currentSelectionEditeur) {
                 case 0:
