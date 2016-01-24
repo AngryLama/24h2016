@@ -30,5 +30,6 @@
         <file>Laser Rod.ttf</file>
         <file>Images/Droite.png</file>
         <file>Images/Gauche.png</file>
+        <file>Images/Gagne.png</file>
     </qresource>
 </RCC>

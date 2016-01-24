@@ -41,10 +41,9 @@ MainWindow::MainWindow(QWidget *parent) :
     //Création de scene gagne
     sceneGagne=new QGraphicsScene(0,0,geometry().width()-10,geometry().height()-10);
 
-    texteGagne=new QGraphicsTextItem("GAGNE");
-    texteGagne->setDefaultTextColor(QColor(Qt::white));
-    texteGagne->setPos(width()/6,height()/7);
-    texteGagne->setFont(QFont("Laser Rod",250));
+    texteGagne=new QGraphicsRectItem(0,0,1280,360);
+    texteGagne->setBrush(QBrush(QPixmap(":/Images/Gagne.png").scaledToHeight(texteGagne->rect().height())));
+    texteGagne->setPos(0,height()/4);
     sceneGagne->addItem(texteGagne);
 
     retourMenuGagne=new QGraphicsRectItem(0,0,120,120);
@@ -936,13 +935,16 @@ void MainWindow::on_sourisRelachee()
                     {
                         if(listeItem.last()==tableauJeu[x][y])
                         {
-                            verifTableau=true;
-                            cx=x;
-                            cy=y;
+                            if(currentPattern[x][y]!="M" && currentPattern[x][y]!="TIE")
+                            {
+                                verifTableau=true;
+                                cx=x;
+                                cy=y;
+                            }
                         }
                     }
                 }
-                if(verifTableau && currentSelectionJeu!=-1)
+                if(verifTableau && currentSelectionJeu>-1)
                 {
                     curseur->setBrush(QBrush(QPixmap(":/Images/curseurVert.png").scaledToHeight(curseur->rect().height())));
                     if((affNbSelection[currentSelectionJeu]->text().toInt()-1)>-1)

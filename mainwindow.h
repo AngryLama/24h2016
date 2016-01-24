@@ -74,8 +74,7 @@ private:
     QString tempModif;
 
     //Gagne
-    QGraphicsTextItem *texteGagne;
-    QGraphicsRectItem *retourMenuGagne;
+    QGraphicsRectItem *texteGagne,*retourMenuGagne;
 };
 
 #endif // MAINWINDOW_H
