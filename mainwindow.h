@@ -22,7 +22,9 @@ enum{
     GD,
     DG,
     HB,
-    BH
+    BH,
+    OFFI,
+    CUSTOM
 };
 
 namespace Ui {
@@ -37,6 +39,7 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
     void calculLaser(short x,short y,short sens);
+    void affichageNiveaux(int colonnes,short mode);
 
 private slots:
     void on_sourisBougee(QPoint position);
@@ -69,7 +72,7 @@ private:
     QGraphicsRectItem *zone[2],*boutonNiveaux[4],*apercu[TAILLE][TAILLE],*cadreApercu,*boutonScroll[4];
     QList<QGraphicsTextItem*> offi,custom;
     QGraphicsLineItem *ligne[2];
-    short currentSelectionNiveaux;
+    short currentSelectionNiveaux,scrollOffi,scrollCustom;
     bool isOffiSelectionNiveaux,isModification;
     QString tempModif;
 
