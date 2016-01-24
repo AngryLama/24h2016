@@ -10,7 +10,7 @@ MainWindow::MainWindow(QWidget *parent) :
     pen=new QPen(Qt::white,5);
 
     //Importation de la police d'ecriture
-    QFontDatabase::addApplicationFont(":/Spyv3l.ttf"); //Spylord Laser
+    QFontDatabase::addApplicationFont(":/eaglestrikelaser.ttf"); //Eagle Strike Laser
 
     //Création de la vue
     jeu=new Vue(geometry(),this);
@@ -44,7 +44,7 @@ MainWindow::MainWindow(QWidget *parent) :
     texteGagne=new QGraphicsTextItem("GAGNE");
     texteGagne->setDefaultTextColor(QColor(Qt::white));
     texteGagne->setPos(width()/10,height()/3);
-    texteGagne->setFont(QFont("Spylord Laser",80));
+    texteGagne->setFont(QFont("Eagle Strike Laser",80));
     sceneGagne->addItem(texteGagne);
 
     retourMenuGagne=new QGraphicsRectItem(0,0,120,120);
@@ -168,13 +168,13 @@ MainWindow::MainWindow(QWidget *parent) :
     titre[0]=new QGraphicsTextItem("OFFICIEL");
     titre[0]->setDefaultTextColor(QColor(Qt::white));
     titre[0]->setPos(60,10);
-    titre[0]->setFont(QFont("Spylord Laser",25));
+    titre[0]->setFont(QFont("Eagle Strike Laser",25));
     sceneNiveaux->addItem(titre[0]);
 
     titre[1]=new QGraphicsTextItem("CUSTOM");
     titre[1]->setDefaultTextColor(QColor(Qt::white));
     titre[1]->setPos(750,10);
-    titre[1]->setFont(QFont("Spylord Laser",25));
+    titre[1]->setFont(QFont("Eagle Strike Laser",25));
     sceneNiveaux->addItem(titre[1]);
 
     ligne[0]=new QGraphicsLineItem(QLine(0,0,0,(height()/3)*2));
@@ -401,7 +401,7 @@ void MainWindow::on_sourisCliquee(int touche)
                         while(query.next()){
                             QGraphicsTextItem *temp=new QGraphicsTextItem(query.value(0).toString());
                             temp->setDefaultTextColor(QColor(Qt::white));
-                            temp->setFont(QFont("Spylord Laser",15));
+                            temp->setFont(QFont("Eagle Strike Laser",15));
                             if(query.value(1).toInt())
                             {
                                 offi<<temp;
