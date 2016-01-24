@@ -48,7 +48,7 @@ private:
     //Editeur
     QGraphicsRectItem *tableau[TAILLE][TAILLE], *indicDepart[TAILLE], *selection[6], *btnSave, *btnMP;
     QString base[TAILLE][TAILLE];
-    short currentSelection,depart;
+    short currentSelectionEditeur,depart;
     QPen *pen;
     DialogNomNiveau *dialNomNiv;
 
@@ -57,6 +57,8 @@ private:
     QGraphicsRectItem *zone[2],*boutonNiveaux[4],*apercu[TAILLE][TAILLE],*cadreApercu;
     QList<QGraphicsTextItem*> offi,custom;
     QGraphicsLineItem *ligne[2];
+    short currentSelectionNiveaux;
+    bool isOffiSelectionNiveaux;
 };
 
 #endif // MAINWINDOW_H

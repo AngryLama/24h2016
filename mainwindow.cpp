@@ -261,24 +261,24 @@ void MainWindow::on_sourisCliquee(int touche)
                 {
                     //Lancer l'éditeur
                     sceneEditeur->addItem(curseur);
-                    currentSelection=-1;
+                    currentSelectionEditeur=-1;
                     jeu->setScene(sceneEditeur);
                 }
             }
         }else{
             if(jeu->scene()==sceneEditeur){
-                currentSelection=-1;
+                currentSelectionEditeur=-1;
                 if (listeItem.length()>0)
                 {
                     bool verifSelection=false;
                     for(int x=0;x<6;x++){
                         if(listeItem.last()==selection[x]){
                             verifSelection=true;
-                            currentSelection=x;
+                            currentSelectionEditeur=x;
                         }
                     }
                     if(verifSelection){
-                        curseur->setBrush(selection[currentSelection]->brush());
+                        curseur->setBrush(selection[currentSelectionEditeur]->brush());
                     }
                     if(listeItem.last() == btnSave){
                         //IHM pour demander le nom
@@ -322,75 +322,112 @@ void MainWindow::on_sourisCliquee(int touche)
                             }
                             sceneMenu->addItem(curseur);
                             jeu->setScene(sceneMenu);
-                        }
-
-                        if(listeItem.last()!=boutonNiveaux[0] && listeItem.last()!=boutonNiveaux[1] && listeItem.last()!=boutonNiveaux[2] && listeItem.last()!=ligne[0] && listeItem.last()!=ligne[1] && listeItem.last()!=titre[0] && listeItem.last()!=titre[1]){
-                            for(int x=0;x<TAILLE;x++)
-                            {
-                                for(int y=0;y<TAILLE;y++)
-                                {
-                                    apercu[x][y]->setBrush(QBrush());
+                        }else{
+                            //Suppression
+                            if(listeItem.last()==boutonNiveaux[2]){
+                                QSqlQuery query;
+                                query.prepare("DELETE FROM Niveaux where nom=:nom AND off=:off");
+                                if(isOffiSelectionNiveaux)
+                                    query.bindValue(":nom",offi[currentSelectionNiveaux]->toPlainText());
+                                else query.bindValue(":nom",custom[currentSelectionNiveaux]->toPlainText());
+                                query.bindValue(":off",isOffiSelectionNiveaux);
+                                if(query.exec())
+                                    qDebug()<<"Suppression avec succès";
+                                else qDebug()<<"Echec de suppression";
+                                sceneNiveaux->removeItem(custom[currentSelectionNiveaux]);
+                                custom.removeAt(currentSelectionNiveaux);
+                                if(currentSelectionNiveaux<custom.length()){
+                                    for(int x=currentSelectionNiveaux;x<custom.length();x++)
+                                    {
+                                        if(x<6){
+                                            custom[x]->setPos((width()/2)+40,120+55*x);
+                                            sceneNiveaux->addItem(custom[x]);
+                                        }
+                                    }
                                 }
-                            }
-                        }
-                        //Apercu des niveaux
-                        int memX;
-                        bool verifOffi=false;
-                        for(int x=0;x<offi.length();x++)
-                        {
-                            if(listeItem.last()==offi[x])
-                            {
-                                verifOffi=true;
-                                memX=x;
-                            }
-                        }
-
-                        bool verifCustom=false;
-                        for(int x=0;x<custom.length();x++)
-                        {
-                            if(listeItem.last()==custom[x])
-                            {
-                                verifCustom=true;
-                                memX=x;
-                            }
-                        }
-
-                        if(verifOffi || verifCustom)
-                        {
-                            QSqlQuery query;
-                            query.prepare("select grille0,grille1,grille2,grille3,grille4,grille5,grille6,grille7 from Niveaux where nom=:nom and off=:off;");
-                            if(verifOffi){
-                                query.bindValue(":nom",offi[memX]->toPlainText());
-                                query.bindValue(":off",true);
-                            }else{
-                                query.bindValue(":nom",custom[memX]->toPlainText());
-                                query.bindValue(":off",false);
-                            }
-                            if(query.exec())
-                            {
-                                while(query.next())
+                                for(int x=0;x<TAILLE;x++)
                                 {
+                                    for(int y=0;y<TAILLE;y++)
+                                    {
+                                        apercu[x][y]->setBrush(QBrush());
+                                    }
+                                }
+                            }else{
+                                if(listeItem.last()!=boutonNiveaux[0] && listeItem.last()!=boutonNiveaux[1] && listeItem.last()!=boutonNiveaux[2] && listeItem.last()!=ligne[0] && listeItem.last()!=ligne[1] && listeItem.last()!=titre[0] && listeItem.last()!=titre[1]){
                                     for(int x=0;x<TAILLE;x++)
                                     {
-                                        QStringList temp=query.value(x).toString().split(";");
-                                        for(int y=0; y<TAILLE; y++){
-                                            if(temp[y] == "GH") {
-                                                apercu[x][y]->setBrush(QBrush(QPixmap(":/Laser/Miroir GH.png").scaledToHeight(apercu[x][y]->rect().height())));
-                                            }
-                                            if(temp[y] == "DH") {
-                                                apercu[x][y]->setBrush(QBrush(QPixmap(":/Laser/Miroir DH.png").scaledToHeight(apercu[x][y]->rect().height())));
-                                            }
-                                            if(temp[y] == "GB") {
-                                                apercu[x][y]->setBrush(QBrush(QPixmap(":/Laser/Miroir GB.png").scaledToHeight(apercu[x][y]->rect().height())));
-                                            }
-                                            if(temp[y] =="DB") {
-                                                apercu[x][y]->setBrush(QBrush(QPixmap(":/Laser/Miroir DB.png").scaledToHeight(apercu[x][y]->rect().height())));
-                                            }
-                                            if(temp[y] =="M") {
-                                                apercu[x][y]->setBrush(QBrush(QPixmap(":/Laser/Mur.png").scaledToHeight(apercu[x][y]->rect().height())));
-                                            }
-                                            if(temp[y] == "TIE") {
-                                                apercu[x][y]->setBrush(QBrush(QPixmap(":/Images/chasseur.png").scaledToHeight(apercu[x][y]->rect().height())));
+                                        for(int y=0;y<TAILLE;y++)
+                                        {
+                                            apercu[x][y]->setBrush(QBrush());
+                                        }
+                                    }
+                                }
+                                //Apercu des niveaux
+                                int memX;
+                                bool verifOffi=false;
+                                for(int x=0;x<offi.length();x++)
+                                {
+                                    if(listeItem.last()==offi[x])
+                                    {
+                                        verifOffi=true;
+                                        memX=x;
+                                    }
+                                }
+
+                                bool verifCustom=false;
+                                for(int x=0;x<custom.length();x++)
+                                {
+                                    if(listeItem.last()==custom[x])
+                                    {
+                                        verifCustom=true;
+                                        memX=x;
+                                    }
+                                }
+
+                                if(verifOffi || verifCustom)
+                                {
+                                    isOffiSelectionNiveaux=verifOffi;
+                                    currentSelectionNiveaux=memX;
+                                    QSqlQuery query;
+                                    query.prepare("select grille0,grille1,grille2,grille3,grille4,grille5,grille6,grille7 from Niveaux where nom=:nom and off=:off;");
+                                    if(verifOffi){
+                                        sceneNiveaux->removeItem(boutonNiveaux[1]);
+                                        sceneNiveaux->removeItem(boutonNiveaux[2]);
+                                        query.bindValue(":nom",offi[memX]->toPlainText());
+                                        query.bindValue(":off",true);
+                                    }else{
+                                        sceneNiveaux->addItem(boutonNiveaux[1]);
+                                        sceneNiveaux->addItem(boutonNiveaux[2]);
+                                        query.bindValue(":nom",custom[memX]->toPlainText());
+                                        query.bindValue(":off",false);
+                                    }
+                                    if(query.exec())
+                                    {
+                                        while(query.next())
+                                        {
+                                            for(int x=0;x<TAILLE;x++)
+                                            {
+                                                QStringList temp=query.value(x).toString().split(";");
+                                                for(int y=0; y<TAILLE; y++){
+                                                    if(temp[y] == "GH") {
+                                                        apercu[x][y]->setBrush(QBrush(QPixmap(":/Laser/Miroir GH.png").scaledToHeight(apercu[x][y]->rect().height())));
+                                                    }
+                                                    if(temp[y] == "DH") {
+                                                        apercu[x][y]->setBrush(QBrush(QPixmap(":/Laser/Miroir DH.png").scaledToHeight(apercu[x][y]->rect().height())));
+                                                    }
+                                                    if(temp[y] == "GB") {
+                                                        apercu[x][y]->setBrush(QBrush(QPixmap(":/Laser/Miroir GB.png").scaledToHeight(apercu[x][y]->rect().height())));
+                                                    }
+                                                    if(temp[y] =="DB") {
+                                                        apercu[x][y]->setBrush(QBrush(QPixmap(":/Laser/Miroir DB.png").scaledToHeight(apercu[x][y]->rect().height())));
+                                                    }
+                                                    if(temp[y] =="M") {
+                                                        apercu[x][y]->setBrush(QBrush(QPixmap(":/Laser/Mur.png").scaledToHeight(apercu[x][y]->rect().height())));
+                                                    }
+                                                    if(temp[y] == "TIE") {
+                                                        apercu[x][y]->setBrush(QBrush(QPixmap(":/Images/chasseur.png").scaledToHeight(apercu[x][y]->rect().height())));
+                                                    }
+                                                }
                                             }
                                         }
                                     }
@@ -404,6 +441,7 @@ void MainWindow::on_sourisCliquee(int touche)
     }
     if(touche==Qt::RightButton)
     {
+        curseur->setBrush(QBrush(QPixmap(":/Images/curseurVert.png").scaledToHeight(curseur->rect().height())));
         if(jeu->scene()==sceneEditeur)
         {
             listeItem = curseur->collidingItems();
@@ -460,11 +498,11 @@ void MainWindow::on_sourisRelachee()
                     }
                 }
             }
-            if(verifTableau && currentSelection!=-1)
+            if(verifTableau && currentSelectionEditeur!=-1)
             {
-                tableau[cx][cy]->setBrush(selection[currentSelection]->brush());
+                tableau[cx][cy]->setBrush(selection[currentSelectionEditeur]->brush());
                 curseur->setBrush(QBrush(QPixmap(":/Images/curseurVert.png").scaledToHeight(curseur->rect().height())));
-                switch (currentSelection) {
+                switch (currentSelectionEditeur) {
                 case 0:
                     base[cx][cy]="GH";
                     break;
@@ -503,7 +541,7 @@ void MainWindow::on_sourisRelachee()
                     indicDepart[cx]->setBrush(QBrush(QPixmap(":/Images/fighter.png").scaledToHeight(indicDepart[cx]->rect().height())));
                     depart=cx;
                 }else{
-                    currentSelection=-1;
+                    currentSelectionEditeur=-1;
                     curseur->setBrush(QBrush(QPixmap(":/Images/curseurVert.png").scaledToHeight(curseur->rect().height())));
                 }
             }

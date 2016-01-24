@@ -6,6 +6,7 @@ DialogNomNiveau::DialogNomNiveau(QWidget *parent) :
     ui(new Ui::DialogNomNiveau)
 {
     ui->setupUi(this);
+    ui->lineEdit_nom->setFocus();
 }
 
 DialogNomNiveau::~DialogNomNiveau()
