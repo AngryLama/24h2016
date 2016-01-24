@@ -265,7 +265,7 @@ void MainWindow::calculLaser(short x, short y, short sens)
     }
     case DG:
     {
-        while(x>0 && !verifObjet)
+        while(x>-1 && !verifObjet)
         {
             if(currentPattern[x][y]=="")
             {
@@ -293,7 +293,7 @@ void MainWindow::calculLaser(short x, short y, short sens)
     }
     case BH:
     {
-        while(y>0 && !verifObjet)
+        while(y>-1 && !verifObjet)
         {
             if(currentPattern[x][y]=="")
             {
@@ -1013,8 +1013,8 @@ void MainWindow::on_DialogAccepted(QString nom)
     query.bindValue(":depart",departEditeur);
     QMessageBox message;
     if(query.exec()){
-        message.setText("Requete réussie");
-    } else message.setText("Echec de la requete");
+        message.setText("Ajouté avec succès");
+    } else message.setText("Echec de l'ajout");
     message.exec();
     sceneMenu->addItem(curseur);
     jeu->setScene(sceneMenu);
