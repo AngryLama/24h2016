@@ -12,6 +12,7 @@
 #include <QDebug>
 #include <QSqlDatabase>
 #include <QSqlQuery>
+#include <QMessageBox>
 #include "vue.h"
 #include "dialognomniveau.h"
 

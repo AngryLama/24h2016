@@ -10,7 +10,7 @@ MainWindow::MainWindow(QWidget *parent) :
     pen=new QPen(Qt::white,5);
 
     //Importation de la police d'ecriture
-    QFontDatabase::addApplicationFont(":/eaglestrikelaser.ttf"); //Eagle Strike Laser
+    QFontDatabase::addApplicationFont(":/Laser Rod.ttf"); //Laser Rod
 
     //Création de la vue
     jeu=new Vue(geometry(),this);
@@ -43,8 +43,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
     texteGagne=new QGraphicsTextItem("GAGNE");
     texteGagne->setDefaultTextColor(QColor(Qt::white));
-    texteGagne->setPos(width()/10,height()/3);
-    texteGagne->setFont(QFont("Eagle Strike Laser",80));
+    texteGagne->setPos(width()/6,height()/7);
+    texteGagne->setFont(QFont("Laser Rod",150));
     sceneGagne->addItem(texteGagne);
 
     retourMenuGagne=new QGraphicsRectItem(0,0,120,120);
@@ -84,7 +84,7 @@ MainWindow::MainWindow(QWidget *parent) :
     palette.setColor(temp->foregroundRole(), Qt::white);
     for(int x=0;x<4;x++){
         affNbSelection[x]=new QLabel(QString::number(0),this);
-        affNbSelection[x]->setFont(QFont("",40));
+        affNbSelection[x]->setFont(QFont("Laser Rod",40));
         affNbSelection[x]->setPalette(palette);
         affNbSelection[x]->setGeometry(selectionJeu[x]->pos().x()+selectionJeu[x]->rect().width()+50,selectionJeu[x]->pos().y(),80,80);
         affNbSelection[x]->hide();
@@ -167,14 +167,14 @@ MainWindow::MainWindow(QWidget *parent) :
     //Création du selecteur de niveaux
     titre[0]=new QGraphicsTextItem("OFFICIEL");
     titre[0]->setDefaultTextColor(QColor(Qt::white));
-    titre[0]->setPos(60,10);
-    titre[0]->setFont(QFont("Eagle Strike Laser",25));
+    titre[0]->setPos(width()/6,10);
+    titre[0]->setFont(QFont("Laser Rod",25));
     sceneNiveaux->addItem(titre[0]);
 
     titre[1]=new QGraphicsTextItem("CUSTOM");
     titre[1]->setDefaultTextColor(QColor(Qt::white));
-    titre[1]->setPos(750,10);
-    titre[1]->setFont(QFont("Eagle Strike Laser",25));
+    titre[1]->setPos((width()/2)+(width()/6),10);
+    titre[1]->setFont(QFont("Laser Rod",25));
     sceneNiveaux->addItem(titre[1]);
 
     ligne[0]=new QGraphicsLineItem(QLine(0,0,0,(height()/3)*2));
@@ -401,7 +401,7 @@ void MainWindow::on_sourisCliquee(int touche)
                         while(query.next()){
                             QGraphicsTextItem *temp=new QGraphicsTextItem(query.value(0).toString());
                             temp->setDefaultTextColor(QColor(Qt::white));
-                            temp->setFont(QFont("Eagle Strike Laser",15));
+                            temp->setFont(QFont("Laser Rod",15));
                             if(query.value(1).toInt())
                             {
                                 offi<<temp;
@@ -414,7 +414,7 @@ void MainWindow::on_sourisCliquee(int touche)
                     //Affichage des niveaux
                     for(int x=0;x<offi.length();x++)
                     {
-                        if(x<6)
+                        if(x<5)
                         {
                             offi[x]->setPos(40,120+55*x);
                             sceneNiveaux->addItem(offi[x]);
@@ -423,7 +423,7 @@ void MainWindow::on_sourisCliquee(int touche)
 
                     for(int x=0;x<custom.length();x++)
                     {
-                        if(x<6)
+                        if(x<5)
                         {
                             custom[x]->setPos((width()/2)+40,120+55*x);
                             sceneNiveaux->addItem(custom[x]);
@@ -500,6 +500,11 @@ void MainWindow::on_sourisCliquee(int touche)
                                     {
                                         currentPattern[x][y]="TIE";
                                         tableauJeu[x][y]->setBrush(QBrush(QPixmap(":/Images/chasseur.png").scaledToHeight(tableauJeu[x][y]->rect().height())));
+                                    }
+                                    if(pattern[x][y]=="M")
+                                    {
+                                        currentPattern[x][y]="M";
+                                        tableauJeu[x][y]->setBrush(QBrush(QPixmap(":/Laser/Mur.png").scaledToHeight(tableauJeu[x][y]->rect().height())));
                                     }
                                 }
                             }
@@ -1006,7 +1011,11 @@ void MainWindow::on_DialogAccepted(QString nom)
         query.bindValue(":grille"+QString::number(x),temp);
     }
     query.bindValue(":depart",departEditeur);
+    QMessageBox message;
     if(query.exec()){
-        qDebug() << "Requete réussie";
-    } else qDebug() << "Echec de la requete";
+        message.setText("Requete réussie");
+    } else message.setText("Echec de la requete");
+    message.exec();
+    sceneMenu->addItem(curseur);
+    jeu->setScene(sceneMenu);
 }
