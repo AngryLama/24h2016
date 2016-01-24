@@ -19,7 +19,7 @@
    <cursorShape>BlankCursor</cursorShape>
   </property>
   <property name="windowTitle">
-   <string>Lazor Major</string>
+   <string>LaZer ! MaJor !</string>
   </property>
   <property name="windowIcon">
    <iconset resource="application.qrc">
