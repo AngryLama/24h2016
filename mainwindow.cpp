@@ -68,7 +68,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     for(int x=0;x<4;x++){
         selectionJeu[x]=new QGraphicsRectItem(0,0,80,80);
-        selectionJeu[x]->setPos(1000,40+(110*x));
+        selectionJeu[x]->setPos(1050,40+(110*x));
         selectionJeu[x]->setPen(*pen);
     }
 
