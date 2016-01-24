@@ -17,6 +17,13 @@
 
 #define TAILLE 8
 
+enum{
+    GD,
+    DG,
+    HB,
+    BH
+};
+
 namespace Ui {
 class MainWindow;
 }
@@ -28,6 +35,7 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
+    void calculLaser(short x,short y,short sens);
 
 private slots:
     void on_sourisBougee(QPoint position);
@@ -46,12 +54,12 @@ private:
     QGraphicsRectItem *cadreJeu, *tableauJeu[TAILLE][TAILLE],*departJeu[TAILLE], *selectionJeu[4];
     QString pattern[TAILLE][TAILLE],currentPattern[TAILLE][TAILLE];
     QLabel *affNbSelection[4];
-    short currentSelectionJeu;
+    short currentSelectionJeu,depart;
 
     //Editeur
     QGraphicsRectItem *tableauEditeur[TAILLE][TAILLE], *indicDepart[TAILLE], *selectionEditeur[6], *btnSave, *btnMP;
     QString base[TAILLE][TAILLE];
-    short currentSelectionEditeur,depart;
+    short currentSelectionEditeur,departEditeur;
     QPen *pen;
     DialogNomNiveau *dialNomNiv;
 

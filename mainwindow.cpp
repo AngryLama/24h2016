@@ -43,8 +43,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
     texteGagne=new QGraphicsTextItem("GAGNE");
     texteGagne->setDefaultTextColor(QColor(Qt::white));
-    texteGagne->setPos(width()/4,height()/2);
-    texteGagne->setFont(QFont("Spylord Laser",250));
+    texteGagne->setPos(width()/10,height()/3);
+    texteGagne->setFont(QFont("Spylord Laser",80));
     sceneGagne->addItem(texteGagne);
 
     retourMenuGagne=new QGraphicsRectItem(0,0,120,120);
@@ -229,6 +229,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
 MainWindow::~MainWindow()
 {
+    sceneGagne->clear();
+    delete sceneGagne;
     sceneEditeur->clear();
     delete sceneEditeur;
     delete pen;
@@ -241,6 +243,121 @@ MainWindow::~MainWindow()
     delete sceneMenu;
     delete jeu;
     delete ui;
+}
+
+void MainWindow::calculLaser(short x, short y, short sens)
+{
+    bool verifObjet=false;
+    switch (sens) {
+    case GD:
+    {
+        while(x<TAILLE && !verifObjet)
+        {
+            if(currentPattern[x][y]=="")
+            {
+                tableauJeu[x][y]->setBrush(QBrush(QPixmap(":/Laser/Laser droit H.png").scaledToHeight(tableauJeu[x][depart]->rect().height())));
+                x++;
+            }else{
+                verifObjet=true;
+            }
+        }
+        break;
+    }
+    case DG:
+    {
+        while(x>0 && !verifObjet)
+        {
+            if(currentPattern[x][y]=="")
+            {
+                tableauJeu[x][y]->setBrush(QBrush(QPixmap(":/Laser/Laser droit H.png").scaledToHeight(tableauJeu[x][depart]->rect().height())));
+                x--;
+            }else{
+                verifObjet=true;
+            }
+        }
+        break;
+    }
+    case HB:
+    {
+        while(y<TAILLE && !verifObjet)
+        {
+            if(currentPattern[x][y]=="")
+            {
+                tableauJeu[x][y]->setBrush(QBrush(QPixmap(":/Laser/Laser droit V.png").scaledToHeight(tableauJeu[x][depart]->rect().height())));
+                y++;
+            }else{
+                verifObjet=true;
+            }
+        }
+        break;
+    }
+    case BH:
+    {
+        while(y>0 && !verifObjet)
+        {
+            if(currentPattern[x][y]=="")
+            {
+                tableauJeu[x][y]->setBrush(QBrush(QPixmap(":/Laser/Laser droit V.png").scaledToHeight(tableauJeu[x][depart]->rect().height())));
+                y--;
+            }else{
+                verifObjet=true;
+            }
+        }
+        break;
+    }
+    default:
+        break;
+    }
+    if(verifObjet)
+    {
+        if(currentPattern[x][y]=="GH")
+        {
+            tableauJeu[x][y]->setBrush(QBrush(QPixmap(":/Laser/Miroir GH laser.png").scaledToHeight(tableauJeu[x][y]->rect().height())));
+            if(sens==GD)
+                calculLaser(x,y-1,BH);
+            if(sens==HB)
+                calculLaser(x-1,y,DG);
+        }
+        if(currentPattern[x][y]=="DH")
+        {
+            tableauJeu[x][y]->setBrush(QBrush(QPixmap(":/Laser/Miroir DH laser.png").scaledToHeight(tableauJeu[x][y]->rect().height())));
+            if(sens==HB)
+                calculLaser(x+1,y,GD);
+            if(sens==DG)
+                calculLaser(x,y-1,BH);
+        }
+        if(currentPattern[x][y]=="GB")
+        {
+            tableauJeu[x][y]->setBrush(QBrush(QPixmap(":/Laser/Miroir GB laser.png").scaledToHeight(tableauJeu[x][y]->rect().height())));
+            if(sens==GD)
+                calculLaser(x,y+1,HB);
+            if(sens==BH)
+                calculLaser(x-1,y,DG);
+        }
+        if(currentPattern[x][y]=="DB")
+        {
+            tableauJeu[x][y]->setBrush(QBrush(QPixmap(":/Laser/Miroir DB laser.png").scaledToHeight(tableauJeu[x][y]->rect().height())));
+            if(sens==BH)
+                calculLaser(x+1,y,GD);
+            if(sens==DG)
+                calculLaser(x,y+1,HB);
+        }
+        if(currentPattern[x][y]=="TIE")
+        {
+            for(int x=0;x<TAILLE;x++)
+            {
+                for(int y=0;y<TAILLE;y++)
+                {
+                    tableauJeu[x][y]->setBrush(QBrush());
+                }
+            }
+            for(int x=0;x<4;x++)
+                affNbSelection[x]->hide();
+            sceneGagne->addItem(retourMenuGagne);
+            sceneGagne->addItem(curseur);
+            jeu->setScene(sceneGagne);
+        }
+    }
 }
 
 void MainWindow::on_sourisBougee(QPoint position)
@@ -260,7 +377,7 @@ void MainWindow::on_sourisBougee(QPoint position)
             else boutonMenu[1]->setBrush(QBrush(QPixmap(":/Images/boutonEditeur.png").scaledToHeight(boutonMenu[0]->rect().height())));
         }
     }
-    if(jeu->scene()==sceneEditeur || jeu->scene()==sceneJeu || jeu->scene()==sceneNiveaux)
+    if(jeu->scene()==sceneEditeur || jeu->scene()==sceneJeu || jeu->scene()==sceneNiveaux || jeu->scene()==sceneGagne)
     {
         curseur->setPos(position);
     }
@@ -379,12 +496,19 @@ void MainWindow::on_sourisCliquee(int touche)
                                 for(int y=0;y<TAILLE;y++)
                                 {
                                     currentPattern[x][y].clear();
+                                    if(pattern[x][y]=="TIE")
+                                    {
+                                        currentPattern[x][y]="TIE";
+                                        tableauJeu[x][y]->setBrush(QBrush(QPixmap(":/Images/chasseur.png").scaledToHeight(tableauJeu[x][y]->rect().height())));
+                                    }
                                 }
                             }
                             for(int x=0;x<4;x++)
                             {
                                 affNbSelection[x]->show();
                             }
+                            calculLaser(0,depart,GD);
+                            sceneJeu->addItem(retourMenuGagne);
                             sceneJeu->addItem(curseur);
                             jeu->setScene(sceneJeu);
                         }else{
@@ -521,7 +645,7 @@ void MainWindow::on_sourisCliquee(int touche)
                                             isOffiSelectionNiveaux=verifOffi;
                                             currentSelectionNiveaux=memX;
                                             QSqlQuery query;
-                                            query.prepare("select grille0,grille1,grille2,grille3,grille4,grille5,grille6,grille7 from Niveaux where nom=:nom and off=:off;");
+                                            query.prepare("select grille0,grille1,grille2,grille3,grille4,grille5,grille6,grille7,depart from Niveaux where nom=:nom and off=:off;");
                                             if(verifOffi){
                                                 sceneNiveaux->removeItem(boutonNiveaux[1]);
                                                 sceneNiveaux->removeItem(boutonNiveaux[2]);
@@ -537,6 +661,10 @@ void MainWindow::on_sourisCliquee(int touche)
                                             {
                                                 while(query.next())
                                                 {
+                                                    for(int y=0;y<TAILLE;y++)
+                                                        departJeu[y]->setBrush(QBrush());
+                                                    departJeu[query.value(8).toInt()]->setBrush(QBrush(QPixmap(":/Images/fighter.png").scaledToHeight(departJeu[query.value(8).toInt()]->rect().height())));
+                                                    depart=query.value(8).toInt();
                                                     for(int x=0;x<TAILLE;x++)
                                                     {
                                                         QStringList temp=query.value(x).toString().split(";");
@@ -589,6 +717,20 @@ void MainWindow::on_sourisCliquee(int touche)
                             if(verifSelection){
                                 curseur->setBrush(selectionEditeur[currentSelectionJeu]->brush());
                             }
+                            if(listeItem.last()==retourMenuGagne)
+                            {
+                                for(int x=0;x<TAILLE;x++)
+                                {
+                                    for(int y=0;y<TAILLE;y++)
+                                    {
+                                        tableauJeu[x][y]->setBrush(QBrush());
+                                    }
+                                }
+                                for(int x=0;x<4;x++)
+                                    affNbSelection[x]->hide();
+                                sceneMenu->addItem(curseur);
+                                jeu->setScene(sceneMenu);
+                            }
                         }
                     }else{
                         if(jeu->scene()==sceneGagne)
@@ -638,6 +780,64 @@ void MainWindow::on_sourisCliquee(int touche)
                         base[cx][cy].clear();
                         tableauEditeur[cx][cy]->setBrush(QBrush());
                     }
+                }
+            }
+        }else{
+            if(jeu->scene()==sceneJeu)
+            {
+                QList<QGraphicsItem*> listeItem;
+                listeItem = curseur->collidingItems();
+                listeItem.removeOne(cadreJeu);
+                if (listeItem.length()>0)
+                {
+                    bool verifTableau=false;
+                    int cx,cy;
+                    for(int x=0;x<TAILLE;x++)
+                    {
+                        for(int y=0;y<TAILLE;y++)
+                        {
+                            if(listeItem.last()==tableauJeu[x][y])
+                            {
+                                if(currentPattern[x][y]!="" && currentPattern[x][y]!="M" && currentPattern[x][y]!="TIE")
+                                {
+                                    verifTableau=true;
+                                    cx=x;
+                                    cy=y;
+                                }
+                            }
+                        }
+                    }
+                    if(verifTableau)
+                    {
+                        if(currentPattern[cx][cy]=="GH")
+                        {
+                            affNbSelection[0]->setText(QString::number(affNbSelection[0]->text().toInt()+1));
+                        }
+                        if(currentPattern[cx][cy]=="DH")
+                        {
+                            affNbSelection[1]->setText(QString::number(affNbSelection[1]->text().toInt()+1));
+                        }
+                        if(currentPattern[cx][cy]=="GB")
+                        {
+                            affNbSelection[2]->setText(QString::number(affNbSelection[2]->text().toInt()+1));
+                        }
+                        if(currentPattern[cx][cy]=="DB")
+                        {
+                            affNbSelection[3]->setText(QString::number(affNbSelection[3]->text().toInt()+1));
+                        }
+                        currentPattern[cx][cy].clear();
+                        tableauJeu[cx][cy]->setBrush(QBrush());
+
+                    }
+                    for(int x=0;x<TAILLE;x++)
+                    {
+                        for(int y=0;y<TAILLE;y++)
+                        {
+                            if(currentPattern[x][y]=="")
+                                tableauJeu[x][y]->setBrush(QBrush());
+                        }
+                    }
+                    calculLaser(0,depart,GD);
                 }
             }
         }
@@ -708,7 +908,7 @@ void MainWindow::on_sourisRelachee()
                     for(int y=0;y<TAILLE;y++)
                         indicDepart[y]->setBrush(QBrush(QPixmap(":/Images/depart.png").scaledToHeight(indicDepart[y]->rect().height())));
                     indicDepart[cx]->setBrush(QBrush(QPixmap(":/Images/fighter.png").scaledToHeight(indicDepart[cx]->rect().height())));
-                    depart=cx;
+                    departEditeur=cx;
                 }else{
                     currentSelectionEditeur=-1;
                     curseur->setBrush(QBrush(QPixmap(":/Images/curseurVert.png").scaledToHeight(curseur->rect().height())));
@@ -760,20 +960,15 @@ void MainWindow::on_sourisRelachee()
                         default:
                             break;
                         }
-                        bool verifGagne=true;
                         for(int x=0;x<TAILLE;x++)
                         {
                             for(int y=0;y<TAILLE;y++)
                             {
-                                if(pattern[x][y]!=currentPattern[x][y])
-                                    verifGagne=false;
+                                if(currentPattern[x][y]=="")
+                                    tableauJeu[x][y]->setBrush(QBrush());
                             }
                         }
-                        if(verifGagne)
-                        {
-                            sceneGagne->addItem(curseur);
-                            jeu->setScene(sceneGagne);
-                        }
+                        calculLaser(0,depart,GD);
                     }
                 }
             }
@@ -810,7 +1005,7 @@ void MainWindow::on_DialogAccepted(QString nom)
         temp=temp.left(temp.length()-1);
         query.bindValue(":grille"+QString::number(x),temp);
     }
-    query.bindValue(":depart",depart);
+    query.bindValue(":depart",departEditeur);
     if(query.exec()){
         qDebug() << "Requete réussie";
     } else qDebug() << "Echec de la requete";
